@@ -11,11 +11,14 @@
 // Windows ヘッダー ファイル:
 #include <windows.h>
 
-// C ランタイム ヘッダー ファイル
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <functional>
+#include <memory>
+#include <sstream>
 
+#define GLFW_INCLUDE_GLU
 
-// TODO: プログラムに必要な追加ヘッダーをここで参照してください
+#include <GLFW/glfw3.h>
+
+constexpr GLdouble GLepsilon = static_cast<double>(1) / 8192;

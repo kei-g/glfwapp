@@ -1,5 +1,14 @@
 #include "glfw.h"
 
+stbi_uc *stbi_load_from_resource(HMODULE hModule, int resourceId, LPCTSTR resourceType, int *width, int *height, int *comp, int req_comp = 0)
+{
+	auto resourceInfo = FindResource(hModule, MAKEINTRESOURCE(resourceId), resourceType);
+	auto resource = LoadResource(hModule, resourceInfo);
+	auto image = LockResource(resource);
+	auto size = SizeofResource(hModule, resourceInfo);
+	return stbi_load_from_memory(static_cast<stbi_uc *>(image), static_cast<int>(size), width, height, comp, req_comp);
+}
+
 // 赤道傾斜角
 constexpr auto Obliquity = 23.43;
 
@@ -10,7 +19,6 @@ int APIENTRY wWinMain(
 	_In_ int nCmdShow
 )
 {
-	UNREFERENCED_PARAMETER(hInstance);
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 	UNREFERENCED_PARAMETER(nCmdShow);
@@ -39,7 +47,7 @@ int APIENTRY wWinMain(
 		// テクスチャ作成
 		stbi_set_flip_vertically_on_load(1);
 		auto w = 0, h = 0, c = 0;
-		auto buf = stbi_load("earth.jpg", &w, &h, &c, 0);
+		auto buf = stbi_load_from_resource(hInstance, IDR_IMAGE_EARTH, "Image", &w, &h, &c);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

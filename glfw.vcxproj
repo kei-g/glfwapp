@@ -180,6 +180,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="2zentai_midori.png" />
+    <Image Include="3tikyu1.png" />
+    <Image Include="4zentai.png" />
+    <Image Include="5zentai50.png" />
     <Image Include="earth.jpg" />
     <Image Include="glfw.ico" />
     <Image Include="small.ico" />

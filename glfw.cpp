@@ -9,8 +9,22 @@ stbi_uc *stbi_load_from_resource(HMODULE hModule, int resourceId, LPCTSTR resour
 	return stbi_load_from_memory(static_cast<stbi_uc *>(image), static_cast<int>(size), width, height, comp, req_comp);
 }
 
+void glLoadTextureFromResource(HMODULE hModule, int resourceId, LPCTSTR resourceType)
+{
+	auto w = 0, h = 0, c = 0;
+	auto buf = stbi_load_from_resource(hModule, resourceId, resourceType, &w, &h, &c);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	stbi_image_free(buf);
+}
+
 // 赤道傾斜角
 constexpr auto Obliquity = 23.43;
+
+// リソースID
+constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,
@@ -45,14 +59,14 @@ int APIENTRY wWinMain(
 		glClearColor(0, 0, 0, 1);
 
 		// テクスチャ作成
+		GLuint textures[5] = { 0 };
+		glGenTextures(_countof(textures), textures);
 		stbi_set_flip_vertically_on_load(1);
-		auto w = 0, h = 0, c = 0;
-		auto buf = stbi_load_from_resource(hInstance, IDR_IMAGE_EARTH, "Image", &w, &h, &c);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		stbi_image_free(buf);
+		for (auto i = 0; i < _countof(textures); i++) {
+			glBindTexture(GL_TEXTURE_2D, textures[i]);
+			glLoadTextureFromResource(hInstance, resourceIDs[i], TEXT("Image"));
+		}
+		glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 		// カメラ
 		auto camera = GLcamera{ -3, 0.25, 0 };
@@ -77,6 +91,21 @@ int APIENTRY wWinMain(
 				break;
 			case GLFW_KEY_RIGHT:
 				camera.direction += 0.5;
+				break;
+			case GLFW_KEY_1:
+				glBindTexture(GL_TEXTURE_2D, textures[0]);
+				break;
+			case GLFW_KEY_2:
+				glBindTexture(GL_TEXTURE_2D, textures[1]);
+				break;
+			case GLFW_KEY_3:
+				glBindTexture(GL_TEXTURE_2D, textures[2]);
+				break;
+			case GLFW_KEY_4:
+				glBindTexture(GL_TEXTURE_2D, textures[3]);
+				break;
+			case GLFW_KEY_5:
+				glBindTexture(GL_TEXTURE_2D, textures[4]);
 				break;
 			}
 		});

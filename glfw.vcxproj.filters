@@ -79,6 +79,18 @@
     <Image Include="earth.jpg">
       <Filter>リソース ファイル</Filter>
     </Image>
+    <Image Include="2zentai_midori.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="3tikyu1.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="4zentai.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="5zentai50.png">
+      <Filter>リソース ファイル</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

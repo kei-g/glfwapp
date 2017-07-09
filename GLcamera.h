@@ -7,6 +7,9 @@ struct GLcamera : public GLpoint3d
 	// 視線の向き(deg)
 	double direction;
 
+	// 中心を見る
+	bool lookAtCenter;
+
 	// デフォルトコンストラクタ
 	GLcamera();
 

@@ -129,6 +129,11 @@ int APIENTRY wWinMain(
 					torusOffset -= static_cast<double>(1) / 128;
 				}
 				break;
+			case GLFW_KEY_C:
+				if (action == GLFW_RELEASE) {
+					camera.lookAtCenter = !camera.lookAtCenter;
+				}
+				break;
 			}
 		});
 

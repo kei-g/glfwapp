@@ -16,6 +16,7 @@
 #include <functional>
 #include <memory>
 #include <sstream>
+#include <vector>
 
 #define GLFW_INCLUDE_GLU
 

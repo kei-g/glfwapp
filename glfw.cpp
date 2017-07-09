@@ -68,8 +68,14 @@ int APIENTRY wWinMain(
 		}
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
 
+		// 表示オブジェクトの種類
+		auto sphere = true;
+
+		// トーラスのテクスチャの開始オフセット
+		auto torusOffset = 0.5;
+
 		// カメラ
-		auto camera = GLcamera{ -3, 0.25, 0 };
+		auto camera = GLcamera{ -3, 0, 0 };
 
 		// キー入力
 		context->SetKeyCallback([&](int key, int scan, int action, int mods) {
@@ -107,6 +113,22 @@ int APIENTRY wWinMain(
 			case GLFW_KEY_5:
 				glBindTexture(GL_TEXTURE_2D, textures[4]);
 				break;
+			case GLFW_KEY_S:
+				sphere = true;
+				break;
+			case GLFW_KEY_T:
+				sphere = false;
+				break;
+			case GLFW_KEY_O:
+				if (!sphere) {
+					torusOffset += static_cast<double>(1) / 128;
+				}
+				break;
+			case GLFW_KEY_L:
+				if (!sphere) {
+					torusOffset -= static_cast<double>(1) / 128;
+				}
+				break;
 			}
 		});
 
@@ -116,11 +138,11 @@ int APIENTRY wWinMain(
 			aspect = static_cast<double>(w) / h;
 		});
 
-		// 球を生成
-		auto sphere = gluNewQuadric();
-		gluQuadricDrawStyle(sphere, GLU_FILL);
-		gluQuadricNormals(sphere, GLU_SMOOTH);
-		gluQuadricTexture(sphere, GL_TRUE);
+		// オブジェクトを生成
+		auto quadric = GLquadric();
+		quadric.SetDrawStyle(GLU_FILL);
+		quadric.SetNormals(GLU_SMOOTH);
+		quadric.EnableTexture();
 
 		auto angle = double();
 		while (!context->ShouldClose()) {
@@ -140,30 +162,25 @@ int APIENTRY wWinMain(
 			glLightfv(GL_LIGHT0, GL_DIFFUSE, static_cast<GLcolor4f>(GLcolor::LightGray));
 			glLightfv(GL_LIGHT0, GL_SPECULAR, static_cast<GLcolor4f>(GLcolor::White));
 
-			// グリッドを描画
-			glBegin(GL_LINES);
-			glColor4d(1, 1, 0, 1);
-			GLmaterial::Jade(GL_FRONT);
-			for (auto i = -100; i <= 100; i++) {
-				glVertex3d(static_cast<double>(i) / 10, 0, -10);
-				glVertex3d(static_cast<double>(i) / 10, 0, +10);
-				glVertex3d(-10, 0, static_cast<double>(i) / 10);
-				glVertex3d(+10, 0, static_cast<double>(i) / 10);
-			}
-			glEnd();
-
-			// 球を描画
+			// オブジェクトを描画
 			GLmaterial::Light(GL_FRONT);
 			glPushMatrix();
 			glEnable(GL_TEXTURE_2D);
-			glTranslated(0, 1, 0);
-			glRotated(angle, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // 地軸に対する回転
-			glRotated(Obliquity - 90, 1, 0, 0); // 地軸の傾きを再現する
-			gluSphere(sphere, 1, 32, 32);
+			if (sphere) {
+				glRotated(angle, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // 地軸に対する回転
+				glRotated(Obliquity - 90, 1, 0, 0); // 地軸の傾きを再現する
+				quadric.Sphere(1, 32, 32);
+			}
+			else {
+				glRotated(angle, 0, 1, 0);
+				quadric.Torus(0.875, 0.375, 128, 128, [&torusOffset](GLdouble s, GLdouble t) {
+					glTexCoord2d(1 - s, t - torusOffset);
+				});
+			}
 			glDisable(GL_TEXTURE_2D);
 			glPopMatrix();
 
-			// 球を回転させる
+			// オブジェクトを回転させる
 			angle += 0.0625;
 			if (360 < angle) {
 				angle -= 360;
@@ -173,9 +190,6 @@ int APIENTRY wWinMain(
 
 			glfwWaitEventsTimeout(0.015625);
 		}
-
-		// 球を破棄
-		gluDeleteQuadric(sphere);
 	}
 	catch (const std::exception &e) {
 		MessageBox(nullptr, e.what(), nullptr, MB_ICONHAND);

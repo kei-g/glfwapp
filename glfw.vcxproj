@@ -162,6 +162,8 @@
     <ClInclude Include="glfw.h" />
     <ClInclude Include="GLmaterial.h" />
     <ClInclude Include="GLpoint.hpp" />
+    <ClInclude Include="GLquadric.h" />
+    <ClInclude Include="GLtorusVertex.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -172,6 +174,8 @@
     <ClCompile Include="GLcontext.cpp" />
     <ClCompile Include="glfw.cpp" />
     <ClCompile Include="GLmaterial.cpp" />
+    <ClCompile Include="GLquadric.cpp" />
+    <ClCompile Include="GLtorusVertex.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

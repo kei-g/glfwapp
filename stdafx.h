@@ -13,9 +13,11 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <deque>
 #include <functional>
 #include <memory>
 #include <sstream>
+#include <thread>
 #include <vector>
 
 #define GLFW_INCLUDE_GLU

@@ -17,6 +17,9 @@ private:
 	// ドラッグ情報
 	std::shared_ptr<GLpoint3d> drag;
 
+	// テクスチャ画像の読み込み要求
+	std::deque<size_t> queue;
+
 	// 回転
 	GLdouble rotation;
 
@@ -46,7 +49,7 @@ private:
 
 public:
 	// デフォルトコンストラクタ
-	MyApplication(HMODULE hModule);
+	MyApplication();
 
 	// 必要な機能を有効にする
 	void ApplyCapabilities();

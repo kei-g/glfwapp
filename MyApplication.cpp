@@ -25,19 +25,19 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 		direction += 0.5;
 		break;
 	case GLFW_KEY_1:
-		textures[0].Bind();
+		queue.push_back(0);
 		break;
 	case GLFW_KEY_2:
-		textures[1].Bind();
+		queue.push_back(1);
 		break;
 	case GLFW_KEY_3:
-		textures[2].Bind();
+		queue.push_back(2);
 		break;
 	case GLFW_KEY_4:
-		textures[3].Bind();
+		queue.push_back(3);
 		break;
 	case GLFW_KEY_5:
-		textures[4].Bind();
+		queue.push_back(4);
 		break;
 	case GLFW_KEY_S:
 		target = &sphere;
@@ -81,11 +81,8 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 	}
 }
 
-// リソースID
-constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
-
-MyApplication::MyApplication(HMODULE hModule)
-	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), textures(GLtexture::Generate(hModule, resourceIDs, TEXT("Image"))), torus(0.875, 0.375, 128, 128)
+MyApplication::MyApplication()
+	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
 {
 	sphere.SetDrawStyle(GLU_FILL);
 	sphere.SetNormals(GLU_SMOOTH);
@@ -108,6 +105,14 @@ void MyApplication::ApplyCapabilities()
 
 void MyApplication::BindTextureAt(size_t pos)
 {
+	if (textures.empty()) {
+		// リソースID
+		constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
+
+		// リソースからテクスチャを生成する
+		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
+	}
+
 	textures[pos].Bind();
 }
 
@@ -177,5 +182,12 @@ void MyApplication::Update()
 	rotation += 0.0625;
 	if (360 < rotation) {
 		rotation -= 360;
+	}
+
+	// テクスチャ画像の読み込み要求を処理する
+	while (!queue.empty()) {
+		auto pos = queue.front();
+		queue.pop_front();
+		BindTextureAt(pos);
 	}
 }

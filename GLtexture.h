@@ -37,16 +37,14 @@ public:
 
 	// テクスチャを生成する
 	template<size_t N>
-	static std::vector<GLtexture> Generate(HMODULE hModule, const int(&resourceIDs)[N], LPCTSTR resourceType)
+	static void Generate(std::vector<GLtexture> *textures, HMODULE hModule, const int(&resourceIDs)[N], LPCTSTR resourceType)
 	{
-		GLuint textureIDs[N];
+		GLuint textureIDs[N] = { 0 };
 		glGenTextures(N, textureIDs);
-
-		auto textures = std::vector<GLtexture>();
-		textures.reserve(N);
+		textures->clear();
+		textures->reserve(N);
 		for (auto i = size_t(); i < N; i++) {
-			textures.emplace_back(textureIDs[i], hModule, resourceIDs[i], resourceType);
+			textures->emplace_back(textureIDs[i], hModule, resourceIDs[i], resourceType);
 		}
-		return textures;
 	}
 };

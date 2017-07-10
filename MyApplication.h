@@ -10,6 +10,12 @@ private:
 	// アスペクト比
 	GLdouble aspect;
 
+	// マウスカーソルの座標
+	GLpoint3d cursor;
+
+	// ドラッグ情報
+	std::shared_ptr<GLpoint3d> drag;
+
 	// 回転
 	GLdouble rotation;
 
@@ -22,8 +28,17 @@ private:
 	// トーラスのオフセット
 	GLdouble torusOffset;
 
+	// ウィンドウの高さ
+	int windowHeight;
+
+	// ウィンドウの幅
+	int windowWidth;
+
 	// キーイベントを処理する
 	void KeyEvent(int key, int scan, int action, int mods);
+
+	// マウスイベントを処理する
+	void MouseEvent(int button, int action, int mods);
 
 public:
 	// デフォルトコンストラクタ

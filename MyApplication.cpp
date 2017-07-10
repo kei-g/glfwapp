@@ -63,6 +63,28 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 	}
 }
 
+void MyApplication::MouseEvent(int button, int action, int mods)
+{
+	switch (action) {
+	case GLFW_RELEASE:
+		switch (button) {
+		case GLFW_MOUSE_BUTTON_1:
+			drag = nullptr;
+			break;
+		}
+		break;
+	case GLFW_PRESS:
+		switch (button) {
+		case GLFW_MOUSE_BUTTON_1:
+			drag = std::shared_ptr<GLpoint3d>(new GLpoint3d{ cursor.x, cursor.y, direction });
+			break;
+		}
+		break;
+	case GLFW_REPEAT:
+		break;
+	}
+}
+
 // ê‘ìπåXéŒäp
 constexpr auto Obliquity = 23.43;
 
@@ -70,7 +92,7 @@ constexpr auto Obliquity = 23.43;
 constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
 
 MyApplication::MyApplication(HMODULE hModule)
-	: GLcamera(-3, 0, 0), rotation(0), sphere(true), textures(GLtexture::Generate(hModule, resourceIDs, TEXT("Image"))), torusOffset(0)
+	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(true), textures(GLtexture::Generate(hModule, resourceIDs, TEXT("Image"))), torusOffset(0)
 {
 	SetDrawStyle(GLU_FILL);
 	SetNormals(GLU_SMOOTH);
@@ -100,13 +122,29 @@ std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, c
 {
 	auto context = GLapplication::CreateContext(width, height, title);
 
+	windowWidth = width;
+	windowHeight = height;
+	context->SetCursorCallback([&](GLdouble x, GLdouble y) {
+		cursor.x = x / windowWidth;
+		cursor.y = y / windowHeight;
+		if (drag && !lookAtCenter) {
+			direction = fmod(drag->z + (cursor.x - drag->x) * 60, 360);
+		}
+	});
+
 	context->SetKeyCallback([&](int key, int scan, int action, int mods) {
 		KeyEvent(key, scan, action, mods);
+	});
+
+	context->SetMouseCallback([&](int button, int action, int mods) {
+		MouseEvent(button, action, mods);
 	});
 
 	aspect = static_cast<double>(width) / height;
 	context->SetResizeCallback([&](int w, int h) {
 		aspect = static_cast<double>(w) / h;
+		windowWidth = w;
+		windowHeight = h;
 	});
 
 	return context;

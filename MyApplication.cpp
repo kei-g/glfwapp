@@ -5,55 +5,62 @@
 
 void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 {
-	switch (key) {
-	case GLFW_KEY_F:
-		MoveAhead(static_cast<double>(1) / 128);
-		break;
-	case GLFW_KEY_B:
-		MoveAhead(static_cast<double>(-1) / 128);
-		break;
-	case GLFW_KEY_UP:
-		y += static_cast<double>(1) / 128;
-		break;
-	case GLFW_KEY_DOWN:
-		y -= static_cast<double>(1) / 128;
-		break;
-	case GLFW_KEY_LEFT:
-		direction -= 0.5;
-		break;
-	case GLFW_KEY_RIGHT:
-		direction += 0.5;
-		break;
-	case GLFW_KEY_1:
-		queue.push_back(0);
-		break;
-	case GLFW_KEY_2:
-		queue.push_back(1);
-		break;
-	case GLFW_KEY_3:
-		queue.push_back(2);
-		break;
-	case GLFW_KEY_4:
-		queue.push_back(3);
-		break;
-	case GLFW_KEY_5:
-		queue.push_back(4);
-		break;
-	case GLFW_KEY_S:
-		target = &sphere;
-		break;
-	case GLFW_KEY_T:
-		target = &torus;
-		break;
-	case GLFW_KEY_O:
-		torus.offset += static_cast<double>(1) / 128;
-		break;
-	case GLFW_KEY_L:
-		torus.offset -= static_cast<double>(1) / 128;
-		break;
-	case GLFW_KEY_C:
-		if (action == GLFW_RELEASE) {
+	switch (action) {
+	case GLFW_RELEASE:
+		switch (key) {
+		case GLFW_KEY_1:
+			queue.push_back(0);
+			break;
+		case GLFW_KEY_2:
+			queue.push_back(1);
+			break;
+		case GLFW_KEY_3:
+			queue.push_back(2);
+			break;
+		case GLFW_KEY_4:
+			queue.push_back(3);
+			break;
+		case GLFW_KEY_5:
+			queue.push_back(4);
+			break;
+		case GLFW_KEY_S:
+			target = &sphere;
+			break;
+		case GLFW_KEY_T:
+			target = &torus;
+			break;
+		case GLFW_KEY_C:
 			lookAtCenter = !lookAtCenter;
+			break;
+		}
+		break;
+	case GLFW_PRESS:
+	case GLFW_REPEAT:
+		switch (key) {
+		case GLFW_KEY_F:
+			MoveAhead(static_cast<double>(1) / 128);
+			break;
+		case GLFW_KEY_B:
+			MoveAhead(static_cast<double>(-1) / 128);
+			break;
+		case GLFW_KEY_UP:
+			y += static_cast<double>(1) / 128;
+			break;
+		case GLFW_KEY_DOWN:
+			y -= static_cast<double>(1) / 128;
+			break;
+		case GLFW_KEY_LEFT:
+			direction -= 0.5;
+			break;
+		case GLFW_KEY_RIGHT:
+			direction += 0.5;
+			break;
+		case GLFW_KEY_O:
+			torus.offset += static_cast<double>(1) / 128;
+			break;
+		case GLFW_KEY_L:
+			torus.offset -= static_cast<double>(1) / 128;
+			break;
 		}
 		break;
 	}

@@ -165,6 +165,7 @@
     <ClInclude Include="GLquadric.h" />
     <ClInclude Include="GLtexture.h" />
     <ClInclude Include="GLtorusVertex.h" />
+    <ClInclude Include="MyApplication.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="GLquadric.cpp" />
     <ClCompile Include="GLtexture.cpp" />
     <ClCompile Include="GLtorusVertex.cpp" />
+    <ClCompile Include="MyApplication.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

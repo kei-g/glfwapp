@@ -1,25 +1,5 @@
 #include "glfw.h"
 
-stbi_uc *stbi_load_from_resource(HMODULE hModule, int resourceId, LPCTSTR resourceType, int *width, int *height, int *comp, int req_comp = 0)
-{
-	auto resourceInfo = FindResource(hModule, MAKEINTRESOURCE(resourceId), resourceType);
-	auto resource = LoadResource(hModule, resourceInfo);
-	auto image = LockResource(resource);
-	auto size = SizeofResource(hModule, resourceInfo);
-	return stbi_load_from_memory(static_cast<stbi_uc *>(image), static_cast<int>(size), width, height, comp, req_comp);
-}
-
-void glLoadTextureFromResource(HMODULE hModule, int resourceId, LPCTSTR resourceType)
-{
-	auto w = 0, h = 0, c = 0;
-	auto buf = stbi_load_from_resource(hModule, resourceId, resourceType, &w, &h, &c);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, buf);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	stbi_image_free(buf);
-}
-
 // 赤道傾斜角
 constexpr auto Obliquity = 23.43;
 
@@ -59,14 +39,8 @@ int APIENTRY wWinMain(
 		glClearColor(0, 0, 0, 1);
 
 		// テクスチャ作成
-		GLuint textures[5] = { 0 };
-		glGenTextures(_countof(textures), textures);
-		stbi_set_flip_vertically_on_load(1);
-		for (auto i = 0; i < _countof(textures); i++) {
-			glBindTexture(GL_TEXTURE_2D, textures[i]);
-			glLoadTextureFromResource(hInstance, resourceIDs[i], TEXT("Image"));
-		}
-		glBindTexture(GL_TEXTURE_2D, textures[0]);
+		auto textures = GLtexture::Generate(hInstance, resourceIDs, TEXT("Image"));
+		textures[0].Bind();
 
 		// 表示オブジェクトの種類
 		auto sphere = true;
@@ -99,19 +73,19 @@ int APIENTRY wWinMain(
 				camera.direction += 0.5;
 				break;
 			case GLFW_KEY_1:
-				glBindTexture(GL_TEXTURE_2D, textures[0]);
+				textures[0].Bind();
 				break;
 			case GLFW_KEY_2:
-				glBindTexture(GL_TEXTURE_2D, textures[1]);
+				textures[1].Bind();
 				break;
 			case GLFW_KEY_3:
-				glBindTexture(GL_TEXTURE_2D, textures[2]);
+				textures[2].Bind();
 				break;
 			case GLFW_KEY_4:
-				glBindTexture(GL_TEXTURE_2D, textures[3]);
+				textures[3].Bind();
 				break;
 			case GLFW_KEY_5:
-				glBindTexture(GL_TEXTURE_2D, textures[4]);
+				textures[4].Bind();
 				break;
 			case GLFW_KEY_S:
 				sphere = true;

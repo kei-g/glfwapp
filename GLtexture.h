@@ -3,6 +3,9 @@
 class GLtexture
 {
 private:
+	// 画像データ
+	std::shared_ptr<std::tuple<void*, int, int>> image;
+
 	// 読み込み済み
 	bool loaded;
 
@@ -25,6 +28,9 @@ private:
 	// コンストラクタ
 	GLtexture(GLuint textureID, HMODULE hModule, HRSRC resourceInfo);
 
+	// テクスチャへ画像データを読み込む
+	void Load();
+
 public:
 	// コンストラクタ
 	GLtexture(GLuint textureID, HMODULE hModule, int resourceID, LPCTSTR resourceType);
@@ -34,6 +40,9 @@ public:
 
 	// このテクスチャを使う
 	void Bind();
+
+	// リソースから画像データを読み込む
+	void Read();
 
 	// テクスチャを生成する
 	template<size_t N>

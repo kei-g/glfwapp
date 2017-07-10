@@ -9,19 +9,19 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 	case GLFW_RELEASE:
 		switch (key) {
 		case GLFW_KEY_1:
-			queue.push_back(0);
+			BindTextureAt(0);
 			break;
 		case GLFW_KEY_2:
-			queue.push_back(1);
+			BindTextureAt(1);
 			break;
 		case GLFW_KEY_3:
-			queue.push_back(2);
+			BindTextureAt(2);
 			break;
 		case GLFW_KEY_4:
-			queue.push_back(3);
+			BindTextureAt(3);
 			break;
 		case GLFW_KEY_5:
-			queue.push_back(4);
+			BindTextureAt(4);
 			break;
 		case GLFW_KEY_S:
 			target = &sphere;
@@ -120,7 +120,8 @@ void MyApplication::BindTextureAt(size_t pos)
 		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
 	}
 
-	textures[pos].Bind();
+	textures[pos].Read();
+	queue.push_back(pos);
 }
 
 std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, const char *title)
@@ -192,9 +193,9 @@ void MyApplication::Update()
 	}
 
 	// テクスチャ画像の読み込み要求を処理する
-	while (!queue.empty()) {
+	if (!queue.empty()) {
 		auto pos = queue.front();
 		queue.pop_front();
-		BindTextureAt(pos);
+		textures[pos].Bind();
 	}
 }

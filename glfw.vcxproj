@@ -163,7 +163,9 @@
     <ClInclude Include="GLmaterial.h" />
     <ClInclude Include="GLpoint.hpp" />
     <ClInclude Include="GLquadric.h" />
+    <ClInclude Include="GLsphere.h" />
     <ClInclude Include="GLtexture.h" />
+    <ClInclude Include="GLtorus.h" />
     <ClInclude Include="GLtorusVertex.h" />
     <ClInclude Include="MyApplication.h" />
     <ClInclude Include="resource.h" />
@@ -177,7 +179,9 @@
     <ClCompile Include="glfw.cpp" />
     <ClCompile Include="GLmaterial.cpp" />
     <ClCompile Include="GLquadric.cpp" />
+    <ClCompile Include="GLsphere.cpp" />
     <ClCompile Include="GLtexture.cpp" />
+    <ClCompile Include="GLtorus.cpp" />
     <ClCompile Include="GLtorusVertex.cpp" />
     <ClCompile Include="MyApplication.cpp" />
     <ClCompile Include="stdafx.cpp">

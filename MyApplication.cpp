@@ -40,20 +40,16 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 		textures[4].Bind();
 		break;
 	case GLFW_KEY_S:
-		sphere = true;
+		target = &sphere;
 		break;
 	case GLFW_KEY_T:
-		sphere = false;
+		target = &torus;
 		break;
 	case GLFW_KEY_O:
-		if (!sphere) {
-			torusOffset += static_cast<double>(1) / 128;
-		}
+		torus.offset += static_cast<double>(1) / 128;
 		break;
 	case GLFW_KEY_L:
-		if (!sphere) {
-			torusOffset -= static_cast<double>(1) / 128;
-		}
+		torus.offset -= static_cast<double>(1) / 128;
 		break;
 	case GLFW_KEY_C:
 		if (action == GLFW_RELEASE) {
@@ -85,18 +81,15 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 	}
 }
 
-// Ô“¹ŒXŽÎŠp
-constexpr auto Obliquity = 23.43;
-
 // ƒŠƒ\[ƒXID
 constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
 
 MyApplication::MyApplication(HMODULE hModule)
-	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(true), textures(GLtexture::Generate(hModule, resourceIDs, TEXT("Image"))), torusOffset(0)
+	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), textures(GLtexture::Generate(hModule, resourceIDs, TEXT("Image"))), torus(0.875, 0.375, 128, 128)
 {
-	SetDrawStyle(GLU_FILL);
-	SetNormals(GLU_SMOOTH);
-	EnableTexture();
+	sphere.SetDrawStyle(GLU_FILL);
+	sphere.SetNormals(GLU_SMOOTH);
+	sphere.EnableTexture();
 }
 
 void MyApplication::ApplyCapabilities()
@@ -173,17 +166,7 @@ void MyApplication::Render()
 	GLmaterial::Light(GL_FRONT);
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
-	if (sphere) {
-		glRotated(rotation, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // ’nŽ²‚É‘Î‚·‚é‰ñ“]
-		glRotated(Obliquity - 90, 1, 0, 0); // ’nŽ²‚ÌŒX‚«‚ðÄŒ»‚·‚é
-		Sphere(1, 32, 32);
-	}
-	else {
-		glRotated(rotation, 0, 1, 0);
-		Torus(0.875, 0.375, 128, 128, [&](GLdouble s, GLdouble t) {
-			glTexCoord2d(1 - s, t - torusOffset);
-		});
-	}
+	target->Draw(rotation);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 }

@@ -2,10 +2,11 @@
 
 #include "GLapplication.h"
 #include "GLcamera.h"
-#include "GLquadric.h"
+#include "GLsphere.h"
 #include "GLtexture.h"
+#include "GLtorus.h"
 
-class MyApplication : public GLapplication, public GLcamera, protected GLquadric {
+class MyApplication : public GLapplication, public GLcamera {
 private:
 	// アスペクト比
 	GLdouble aspect;
@@ -19,14 +20,17 @@ private:
 	// 回転
 	GLdouble rotation;
 
-	// 球orトーラス
-	bool sphere;
+	// 球面
+	GLsphere sphere;
+
+	// 描画対象
+	GLquadric *target;
 
 	// テクスチャ
 	std::vector<GLtexture> textures;
 
-	// トーラスのオフセット
-	GLdouble torusOffset;
+	// トーラス
+	GLtorus torus;
 
 	// ウィンドウの高さ
 	int windowHeight;

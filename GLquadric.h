@@ -16,6 +16,9 @@ public:
 	virtual ~GLquadric();
 
 public:
+	// 描画する
+	virtual void Draw(GLdouble rotation) = 0;
+
 	// テクスチャ有効
 	void EnableTexture();
 
@@ -27,7 +30,4 @@ public:
 
 	// 球体を描画する
 	void Sphere(GLdouble radius, GLint slices, GLint stacks);
-
-	// トーラスを描画する
-	void Torus(GLdouble radius, GLdouble small, GLint slices, GLint stacks, const std::function<void(GLdouble, GLdouble)> &texCoord = [](GLdouble s, GLdouble t) { glTexCoord2d(1 - s, t - 0.5); });
 };

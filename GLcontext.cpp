@@ -4,7 +4,7 @@ GLcontext::GLcontext(GLapplication &app, GLFWwindow *window)
 	: app(app), window(window)
 {
 	glfwSetWindowUserPointer(window, this);
-	glfwSetWindowSizeCallback(window, [](GLFWwindow *window, int width, int height) {
+	glfwSetFramebufferSizeCallback(window, [](GLFWwindow *window, int width, int height) {
 		glViewport(0, 0, width, height);
 		auto context = GLcontext::FromWindow(window);
 		if (context && context->resizeEvent) {

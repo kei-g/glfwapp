@@ -3,6 +3,22 @@
 #include "GLmaterial.h"
 #include "resource.h"
 
+void MyApplication::CursorEvent(GLdouble x, GLdouble y)
+{
+	cursor.x = x /= windowWidth;
+	cursor.y = y /= windowHeight;
+	if (dragContext) {
+		DragEvent(x - dragContext->cursor.x, y - dragContext->cursor.y);
+	}
+}
+
+void MyApplication::DragEvent(GLdouble dx, GLdouble dy)
+{
+	if (!lookAtCenter) {
+		direction = fmod(dragContext->direction + dx * 60, 360);
+	}
+}
+
 void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 {
 	switch (action) {
@@ -70,17 +86,13 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 {
 	switch (action) {
 	case GLFW_RELEASE:
-		switch (button) {
-		case GLFW_MOUSE_BUTTON_1:
-			drag = nullptr;
-			break;
+		if (dragContext && dragContext->button == button) {
+			dragContext = nullptr;
 		}
 		break;
 	case GLFW_PRESS:
-		switch (button) {
-		case GLFW_MOUSE_BUTTON_1:
-			drag = std::shared_ptr<GLpoint3d>(new GLpoint3d{ cursor.x, cursor.y, direction });
-			break;
+		if (!dragContext) {
+			dragContext = std::make_shared<DragContext>(button, mods, cursor, direction);
 		}
 		break;
 	case GLFW_REPEAT:
@@ -89,7 +101,7 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 }
 
 MyApplication::MyApplication()
-	: GLcamera(-3, 0, 0), drag(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
+	: GLcamera(-3, 0, 0), dragContext(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
 {
 	sphere.SetDrawStyle(GLU_FILL);
 	sphere.SetNormals(GLU_SMOOTH);
@@ -130,12 +142,9 @@ std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, c
 
 	windowWidth = width;
 	windowHeight = height;
+
 	context->SetCursorCallback([&](GLdouble x, GLdouble y) {
-		cursor.x = x / windowWidth;
-		cursor.y = y / windowHeight;
-		if (drag && !lookAtCenter) {
-			direction = fmod(drag->z + (cursor.x - drag->x) * 60, 360);
-		}
+		CursorEvent(x, y);
 	});
 
 	context->SetKeyCallback([&](int key, int scan, int action, int mods) {

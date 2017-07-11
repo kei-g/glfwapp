@@ -8,14 +8,25 @@
 
 class MyApplication : public GLapplication, public GLcamera {
 private:
+	struct DragContext {
+		const int button;
+		const int mods;
+		const GLpoint2d cursor;
+		const GLdouble direction;
+		DragContext(int button, int mods, const GLpoint2d &cursor, GLdouble direction)
+			: button(button), mods(mods), cursor(cursor), direction(direction)
+		{
+		}
+	};
+
 	// アスペクト比
 	GLdouble aspect;
 
 	// マウスカーソルの座標
-	GLpoint3d cursor;
+	GLpoint2d cursor;
 
 	// ドラッグ情報
-	std::shared_ptr<GLpoint3d> drag;
+	std::shared_ptr<DragContext> dragContext;
 
 	// テクスチャ画像の読み込み要求
 	std::deque<size_t> queue;
@@ -40,6 +51,12 @@ private:
 
 	// ウィンドウの幅
 	int windowWidth;
+
+	// カーソルイベントを処理する
+	void CursorEvent(GLdouble x, GLdouble y);
+
+	// ドラッグイベントを処理する
+	void DragEvent(GLdouble dx, GLdouble dy);
 
 	// キーイベントを処理する
 	void KeyEvent(int key, int scan, int action, int mods);

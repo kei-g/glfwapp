@@ -100,6 +100,11 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 	}
 }
 
+void MyApplication::ScrollEvent(double x, double y)
+{
+	GLcamera::MoveAhead(y / 16);
+}
+
 MyApplication::MyApplication()
 	: GLcamera(-3, 0, 0), dragContext(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
 {
@@ -160,6 +165,10 @@ std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, c
 		aspect = static_cast<double>(w) / h;
 		windowWidth = w;
 		windowHeight = h;
+	});
+
+	context->SetScrollCallback([&](double x, double y) {
+		ScrollEvent(x, y);
 	});
 
 	return context;

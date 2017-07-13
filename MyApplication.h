@@ -64,6 +64,9 @@ private:
 	// マウスイベントを処理する
 	void MouseEvent(int button, int action, int mods);
 
+	// スクロールイベントを処理する
+	void ScrollEvent(double x, double y);
+
 public:
 	// デフォルトコンストラクタ
 	MyApplication();

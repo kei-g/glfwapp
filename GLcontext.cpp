@@ -70,6 +70,20 @@ void GLcontext::SetResizeCallback(const std::function<void(int, int)> &cbfunc)
 	resizeEvent = cbfunc;
 }
 
+void GLcontext::SetScrollCallback(const std::function<void(double, double)> &cbfunc)
+{
+	const auto firstTime = !scrollEvent;
+	scrollEvent = cbfunc;
+	if (firstTime) {
+		glfwSetScrollCallback(window, [](GLFWwindow *window, double x, double y) {
+			auto context = GLcontext::FromWindow(window);
+			if (context && context->scrollEvent) {
+				context->scrollEvent(x, y);
+			}
+		});
+	}
+}
+
 bool GLcontext::ShouldClose() const
 {
 	return !!glfwWindowShouldClose(window);

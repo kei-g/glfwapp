@@ -23,7 +23,7 @@ void GLtexture::Load()
 		throw std::exception("Image has not read yet");
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, std::get<1>(*image), std::get<2>(*image), 0, GL_RGB, GL_UNSIGNED_BYTE, std::get<0>(*image));
+	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, std::get<1>(*image), std::get<2>(*image), GL_RGB, GL_UNSIGNED_BYTE, std::get<0>(*image));
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 

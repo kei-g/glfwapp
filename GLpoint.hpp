@@ -63,6 +63,34 @@ struct GLpoint
 	{
 		return val;
 	}
+
+	// â¡éZ
+	virtual GLpoint<T, N> &operator +=(const GLpoint<T, N> &point)
+	{
+		for (auto i = size_t(); i < N; i++) {
+			val[i] += point[i];
+		}
+		return *this;
+	}
+
+	// èÊéZ
+	virtual GLpoint<T, N> &operator *=(const T arg)
+	{
+		for (auto i = size_t(); i < N; i++) {
+			val[i] *= arg;
+		}
+		return *this;
+	}
+
+	// ì‡êœ
+	virtual T dot(const GLpoint<T, N> &point) const
+	{
+		auto d = T();
+		for (auto i = size_t(); i < N; i++) {
+			d += val[i] * point.val[i];
+		}
+		return d;
+	}
 };
 
 template<typename T>
@@ -143,6 +171,12 @@ struct GLpoint3 : public GLpoint<T, 3>
 	GLpoint<T, 4> operator +(U w) const
 	{
 		return GLpoint<T, 4>{ x, y, z, static_cast<T>(w) };
+	}
+
+	// äOêœ
+	GLpoint3 cross(const GLpoint3 &point) const
+	{
+		return GLpoint3(y * point.z - z * point.y, z * point.x - x * point.z, x * point.y - y * point.x);
 	}
 };
 

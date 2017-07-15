@@ -6,22 +6,34 @@ GLcamera::GLcamera()
 }
 
 GLcamera::GLcamera(double x, double y, double z, double direction)
-	: GLpoint3d(x, y, z), direction(direction), lookAtCenter(false)
+	: GLpoint3d(x, y, z), gaze(direction, 0)
 {
+}
+
+GLpoint3d GLcamera::GetVector() const
+{
+	const auto horz = gaze.x * M_PI / 180;
+	const auto vert = gaze.y * M_PI / 180;
+	return GLpoint3d(cos(horz) * cos(vert), -sin(vert), sin(horz));
 }
 
 void GLcamera::LookAt()
 {
-	if (lookAtCenter) {
-		gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
-	}
-	else {
-		gluLookAt(x, y, z, x + cos(direction * M_PI / 180), y, z + sin(direction * M_PI / 180), 0, 1, 0);
-	}
+	auto c = *this;
+	c += GetVector();
+	gluLookAt(x, y, z, c.x, c.y, c.z, 0, 1, 0);
 }
 
 void GLcamera::MoveAhead(double distance)
 {
-	x += cos(direction * M_PI / 180) * distance;
-	z += sin(direction * M_PI / 180) * distance;
+	auto c = GetVector();
+	c *= distance;
+	*this += c;
+}
+
+void GLcamera::Shift(double distance)
+{
+	auto c = GLpoint3d(0, 1, 0).cross(GetVector());
+	c *= distance;
+	*this += c;
 }

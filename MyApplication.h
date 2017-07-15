@@ -9,12 +9,21 @@
 class MyApplication : public GLapplication, public GLcamera {
 private:
 	struct DragContext {
+		// ボタン
 		const int button;
+
+		// 前回の座標
+		GLpoint2d last;
+
+		// 状態
 		const int mods;
-		const GLpoint2d cursor;
-		const GLdouble direction;
-		DragContext(int button, int mods, const GLpoint2d &cursor, GLdouble direction)
-			: button(button), mods(mods), cursor(cursor), direction(direction)
+
+		// ドラッグ開始座標
+		const GLpoint2d origin;
+
+		// コンストラクタ
+		DragContext(int button, int mods, const GLpoint2d &cursor)
+			: button(button), last(cursor), mods(mods), origin(origin)
 		{
 		}
 	};

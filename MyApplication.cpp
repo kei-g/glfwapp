@@ -8,15 +8,14 @@ void MyApplication::CursorEvent(GLdouble x, GLdouble y)
 	cursor.x = x /= windowWidth;
 	cursor.y = y /= windowHeight;
 	if (dragContext) {
-		DragEvent(x - dragContext->cursor.x, y - dragContext->cursor.y);
+		DragEvent(x - dragContext->last.x, y - dragContext->last.y);
+		dragContext->last.x = x;
+		dragContext->last.y = y;
 	}
 }
 
 void MyApplication::DragEvent(GLdouble dx, GLdouble dy)
 {
-	if (!lookAtCenter) {
-		direction = fmod(dragContext->direction + dx * 60, 360);
-	}
 }
 
 void MyApplication::KeyEvent(int key, int scan, int action, int mods)
@@ -45,9 +44,6 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 		case GLFW_KEY_T:
 			target = &torus;
 			break;
-		case GLFW_KEY_C:
-			lookAtCenter = !lookAtCenter;
-			break;
 		}
 		break;
 	case GLFW_PRESS:
@@ -66,10 +62,10 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 			y -= static_cast<double>(1) / 128;
 			break;
 		case GLFW_KEY_LEFT:
-			direction -= 0.5;
+			gaze.x = fmod(gaze.x - 0.5, 360);
 			break;
 		case GLFW_KEY_RIGHT:
-			direction += 0.5;
+			gaze.x = fmod(gaze.x + 0.5, 360);
 			break;
 		case GLFW_KEY_O:
 			torus.offset += static_cast<double>(1) / 128;
@@ -89,10 +85,22 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 		if (dragContext && dragContext->button == button) {
 			dragContext = nullptr;
 		}
+		switch (button) {
+		case GLFW_MOUSE_BUTTON_1:
+			gaze.x = fmod(gaze.x + (cursor.x - 0.5) * aspect * 60, 360);
+			gaze.y = fmod(gaze.y + (cursor.y - 0.5) * 60, 360);
+			if (gaze.y < -45) {
+				gaze.y = -45;
+			}
+			else if (45 < gaze.y) {
+				gaze.y = 45;
+			}
+			break;
+		}
 		break;
 	case GLFW_PRESS:
 		if (!dragContext) {
-			dragContext = std::make_shared<DragContext>(button, mods, cursor, direction);
+			dragContext = std::make_shared<DragContext>(button, mods, cursor);
 		}
 		break;
 	case GLFW_REPEAT:
@@ -102,7 +110,12 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 
 void MyApplication::ScrollEvent(double x, double y)
 {
-	GLcamera::MoveAhead(y / 16);
+	if (x != 0) {
+		GLcamera::Shift(x / 16);
+	}
+	if (y != 0) {
+		GLcamera::MoveAhead(y / 16);
+	}
 }
 
 MyApplication::MyApplication()
@@ -192,6 +205,21 @@ void MyApplication::Render()
 	glLightfv(GL_LIGHT0, GL_AMBIENT, static_cast<GLcolor4f>(GLcolor::Gray));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, static_cast<GLcolor4f>(GLcolor::LightGray));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, static_cast<GLcolor4f>(GLcolor::White));
+
+	// グリッドを描画する
+	GLmaterial::Jade(GL_FRONT);
+	glBegin(GL_LINES);
+	for (auto i = -10; i <= 10; i++) {
+		glVertex3d(i, -1, -10);
+		glVertex3d(i, -1, +10);
+		glVertex3d(-10, -1, i);
+		glVertex3d(+10, -1, i);
+		glVertex3d(i, 1, -10);
+		glVertex3d(i, 1, +10);
+		glVertex3d(-10, 1, i);
+		glVertex3d(+10, 1, i);
+	}
+	glEnd();
 
 	// オブジェクトを描画する
 	GLmaterial::Light(GL_FRONT);

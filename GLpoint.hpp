@@ -117,13 +117,25 @@ struct GLpoint2 : public GLpoint<T, 2>
 	}
 
 	// ムーブコンストラクタ
-	GLpoint2(GLpoint2<T> &&p) = delete;
+	GLpoint2(GLpoint2<T> &&p)
+		: GLpoint(p), x(val[0]), y(val[1])
+	{
+	}
 
 	// 型変換
 	template<typename U>
 	operator GLpoint2<U>() const
 	{
 		return GLpoint2<U>{ static_cast<U>(x), static_cast<U>(y) };
+	}
+
+	// 回転
+	template<typename U>
+	GLpoint2<U> Rotate(U angle) const
+	{
+		const auto c = std::cos(angle);
+		const auto s = std::sin(angle);
+		return GLpoint2<U>(c * x - s * y, s * x + c * y);
 	}
 };
 

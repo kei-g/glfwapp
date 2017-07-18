@@ -31,8 +31,14 @@ int APIENTRY wWinMain(
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 		});
+		auto ps4 = PS4joystick(GLFW_JOYSTICK_1);
+		auto axes = PS4axes();
 		while (!context->ShouldClose()) {
-			glfwWaitEvents();
+			//glfwWaitEvents();
+			glfwPollEvents();
+			ps4.Poll(axes);
+			axes(app);
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
 		}
 		thread.join();
 	}

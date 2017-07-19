@@ -155,6 +155,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cage.hpp" />
     <ClInclude Include="GLapplication.h" />
     <ClInclude Include="GLcamera.h" />
     <ClInclude Include="GLcolor4.hpp" />

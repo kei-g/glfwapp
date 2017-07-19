@@ -128,15 +128,6 @@ struct GLpoint2 : public GLpoint<T, 2>
 	{
 		return GLpoint2<U>{ static_cast<U>(x), static_cast<U>(y) };
 	}
-
-	// ‰ñ“]
-	template<typename U>
-	GLpoint2<U> Rotate(U angle) const
-	{
-		const auto c = std::cos(angle);
-		const auto s = std::sin(angle);
-		return GLpoint2<U>(c * x - s * y, s * x + c * y);
-	}
 };
 
 typedef typename GLpoint2<GLdouble> GLpoint2d;

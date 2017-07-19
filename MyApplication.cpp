@@ -1,6 +1,8 @@
 #include "MyApplication.h"
 
 #include "GLmaterial.h"
+
+#include "cage.hpp"
 #include "resource.h"
 
 void MyApplication::CursorEvent(GLdouble x, GLdouble y)
@@ -88,13 +90,7 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 		switch (button) {
 		case GLFW_MOUSE_BUTTON_1:
 			gaze.x = fmod(gaze.x + (cursor.x - 0.5) * aspect * 60, 360);
-			gaze.y = fmod(gaze.y + (cursor.y - 0.5) * 60, 360);
-			if (gaze.y < -45) {
-				gaze.y = -45;
-			}
-			else if (45 < gaze.y) {
-				gaze.y = 45;
-			}
+			gaze.y = cage::clip(-45.0, gaze.y + (cursor.y - 0.5) * 60, 45.0);
 			break;
 		}
 		break;

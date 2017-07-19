@@ -1,5 +1,7 @@
 #include "PS4axes.h"
 
+#include "cage.hpp"
+
 PS4axes::PS4axes()
 {
 }
@@ -16,15 +18,10 @@ PS4axes::~PS4axes()
 void PS4axes::operator()(GLcamera &camera) const
 {
 	camera.gaze.x = fmod(camera.gaze.x + R3.x * 2, 360);
-	camera.gaze.y += R3.y;
-	if (camera.gaze.y < -45) {
-		camera.gaze.y = -45;
-	}
-	else if (45 < camera.gaze.y) {
-		camera.gaze.y = 45;
-	}
+	camera.gaze.y = cage::clip(-45.0, camera.gaze.y + R3.y, 45.0);
 
-	const auto v = L3.Rotate(camera.gaze.x * M_PI / 180);
-	camera.x -= v.y / 64;
-	camera.z += v.x / 64;
+	const auto horz = (camera.gaze.x + 90) * M_PI / 180;
+	const auto vert = camera.gaze.y * M_PI / 180;
+	camera.x += (cos(horz) * L3.x - sin(horz) * L3.y) / 64;
+	camera.z += (sin(horz) * L3.x + cos(horz) * L3.y) / 64;
 }

@@ -164,6 +164,7 @@
     <ClInclude Include="GLmaterial.h" />
     <ClInclude Include="GLpoint.hpp" />
     <ClInclude Include="GLquadric.h" />
+    <ClInclude Include="GLquaternion.hpp" />
     <ClInclude Include="GLsphere.h" />
     <ClInclude Include="GLtexture.h" />
     <ClInclude Include="GLtorus.h" />

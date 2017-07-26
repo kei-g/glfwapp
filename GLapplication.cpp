@@ -17,3 +17,8 @@ std::shared_ptr<GLcontext> GLapplication::CreateContext(int width, int height, c
 	auto window = glfwCreateWindow(width, height, title, nullptr, nullptr);
 	return window ? std::make_shared<GLcontext>(*this, window) : nullptr;
 }
+
+void GLapplication::Run(std::shared_ptr<GLcontext> &context)
+{
+	context->Run();
+}

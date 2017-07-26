@@ -6,6 +6,34 @@
 #include "cage.hpp"
 #include "resource.h"
 
+void MyApplication::ApplyCapabilities()
+{
+	glfwSwapInterval(1);
+
+	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glClearColor(0, 0, 0, 1);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+}
+
+void MyApplication::BindTextureAt(size_t pos)
+{
+	if (textures.empty()) {
+		// リソースID
+		constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
+
+		// リソースからテクスチャを生成する
+		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
+	}
+
+	textures[pos].Read();
+	queue.push_back(pos);
+}
+
 void MyApplication::CursorEvent(GLdouble x, GLdouble y)
 {
 	cursor.x = x /= windowWidth;
@@ -115,75 +143,6 @@ void MyApplication::ScrollEvent(double x, double y)
 	}
 }
 
-MyApplication::MyApplication()
-	: GLcamera(-3, 0, 0), dragContext(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
-{
-	sphere.SetDrawStyle(GLU_FILL);
-	sphere.SetNormals(GLU_SMOOTH);
-	sphere.EnableTexture();
-}
-
-void MyApplication::ApplyCapabilities()
-{
-	glfwSwapInterval(1);
-
-	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0, 0, 0, 1);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-}
-
-void MyApplication::BindTextureAt(size_t pos)
-{
-	if (textures.empty()) {
-		// リソースID
-		constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
-
-		// リソースからテクスチャを生成する
-		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
-	}
-
-	textures[pos].Read();
-	queue.push_back(pos);
-}
-
-std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, const char *title)
-{
-	auto context = GLapplication::CreateContext(width, height, title);
-
-	windowWidth = width;
-	windowHeight = height;
-
-	context->SetCursorCallback([&](GLdouble x, GLdouble y) {
-		CursorEvent(x, y);
-	});
-
-	context->SetKeyCallback([&](int key, int scan, int action, int mods) {
-		KeyEvent(key, scan, action, mods);
-	});
-
-	context->SetMouseCallback([&](int button, int action, int mods) {
-		MouseEvent(button, action, mods);
-	});
-
-	aspect = static_cast<double>(width) / height;
-	context->SetResizeCallback([&](int w, int h) {
-		aspect = static_cast<double>(w) / h;
-		windowWidth = w;
-		windowHeight = h;
-	});
-
-	context->SetScrollCallback([&](double x, double y) {
-		ScrollEvent(x, y);
-	});
-
-	return context;
-}
-
 void MyApplication::Render()
 {
 	glMatrixMode(GL_PROJECTION);
@@ -227,41 +186,10 @@ void MyApplication::Render()
 	glPopMatrix();
 }
 
-void MyApplication::Run(std::shared_ptr<GLcontext> &context)
+void MyApplication::Setup()
 {
-	// 描画スレッド
-	auto thread = std::thread([&]() {
-		context->MakeCurrent();
-		ApplyCapabilities();
-		BindTextureAt(0);
-		while (!context->ShouldClose()) {
-			Render();
-			Update();
-			context->SwapBuffers();
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}
-	});
-
-	// PS4コントローラ
-	auto ps4 = PS4joystick(GLFW_JOYSTICK_1);
-
-	// 入力監視
-	while (!context->ShouldClose()) {
-		glfwPollEvents();
-
-		// PS4コントローラの状態
-		auto axes = PS4axes();
-		ps4.Poll(axes);
-
-		// アプリケーションに反映
-		axes(*this);
-
-		// 待機
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
-	}
-
-	// 描画スレッドが終了するまで待機
-	thread.join();
+	ApplyCapabilities();
+	BindTextureAt(0);
 }
 
 void MyApplication::Update()
@@ -278,4 +206,65 @@ void MyApplication::Update()
 		queue.pop_front();
 		textures[pos].Bind();
 	}
+}
+
+MyApplication::MyApplication()
+	: GLcamera(-3, 0, 0), dragContext(nullptr), rotation(0), sphere(1, 32, 32), target(&sphere), torus(0.875, 0.375, 128, 128)
+{
+	sphere.SetDrawStyle(GLU_FILL);
+	sphere.SetNormals(GLU_SMOOTH);
+	sphere.EnableTexture();
+}
+
+std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, const char *title)
+{
+	auto context = GLapplication::CreateContext(width, height, title);
+
+	windowWidth = width;
+	windowHeight = height;
+
+	context->SetCursorCallback([&](GLdouble x, GLdouble y) {
+		CursorEvent(x, y);
+	});
+
+	context->SetKeyCallback([&](int key, int scan, int action, int mods) {
+		KeyEvent(key, scan, action, mods);
+	});
+
+	context->SetMouseCallback([&](int button, int action, int mods) {
+		MouseEvent(button, action, mods);
+	});
+
+	aspect = static_cast<double>(width) / height;
+	context->SetResizeCallback([&](int w, int h) {
+		aspect = static_cast<double>(w) / h;
+		windowWidth = w;
+		windowHeight = h;
+	});
+
+	context->SetScrollCallback([&](double x, double y) {
+		ScrollEvent(x, y);
+	});
+
+	return context;
+}
+
+void MyApplication::Run(std::shared_ptr<GLcontext> &context)
+{
+	// PS4コントローラ入力監視スレッド
+	auto input = std::thread([&]() {
+		auto ps4 = PS4joystick(GLFW_JOYSTICK_1); // PS4コントローラ
+		auto axes = PS4axes(); // PS4コントローラの状態
+		while (!context->ShouldClose()) {
+			ps4.Poll(axes);
+			axes(*this);
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+	});
+
+	// 基底クラスの処理を実行する
+	GLapplication::Run(context);
+
+	// PS4コントローラ入力監視スレッドが終了するまで待機
+	input.join();
 }

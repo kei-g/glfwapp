@@ -1,5 +1,7 @@
 #include "GLcontext.h"
 
+#include "GLapplication.h"
+
 GLcontext::GLcontext(GLapplication &app, GLFWwindow *window)
 	: app(app), window(window)
 {
@@ -45,6 +47,28 @@ GLcontext::~GLcontext()
 void GLcontext::MakeCurrent()
 {
 	glfwMakeContextCurrent(window);
+}
+
+void GLcontext::Run()
+{
+	// 描画スレッド
+	auto renderer = std::thread([&]() {
+		MakeCurrent();
+		app.Setup();
+		while (!ShouldClose()) {
+			app.Render();
+			app.Update();
+			SwapBuffers();
+		}
+	});
+
+	// イベントループ
+	while (!ShouldClose()) {
+		glfwWaitEvents();
+	}
+
+	// 描画スレッドが終了するまで待機
+	renderer.join();
 }
 
 void GLcontext::SetCursorCallback(const std::function<void(double, double)> &cbfunc)

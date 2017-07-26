@@ -19,6 +19,7 @@ public:
 
 public:
 	void MakeCurrent();
+	void Run();
 	void SetCursorCallback(const std::function<void(double, double)> &cbfunc);
 	void SetKeyCallback(const std::function<void(int, int, int, int)> &cbfunc);
 	void SetMouseCallback(const std::function<void(int, int, int)> &cbfunc);

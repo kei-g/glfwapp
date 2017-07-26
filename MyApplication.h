@@ -61,6 +61,12 @@ private:
 	// ウィンドウの幅
 	int windowWidth;
 
+	// 必要な機能を有効にする
+	void ApplyCapabilities();
+
+	// 使用するテクスチャを指定する
+	void BindTextureAt(size_t pos);
+
 	// カーソルイベントを処理する
 	void CursorEvent(GLdouble x, GLdouble y);
 
@@ -76,25 +82,23 @@ private:
 	// スクロールイベントを処理する
 	void ScrollEvent(double x, double y);
 
+protected:
+	// 描画する[描画スレッドから呼ばれる]
+	virtual void Render();
+
+	// 初期化する[描画スレッドから呼ばれる]
+	virtual void Setup();
+
+	// 更新する[描画スレッドから呼ばれる]
+	virtual void Update();
+
 public:
 	// デフォルトコンストラクタ
 	MyApplication();
 
-	// 必要な機能を有効にする
-	void ApplyCapabilities();
-
-	// 使用するテクスチャを指定する
-	void BindTextureAt(size_t pos);
-
 	// ウィンドウを生成する
 	virtual std::shared_ptr<GLcontext> CreateContext(int width, int height, const char *title);
 
-	// 描画する
-	void Render();
-
 	// アプリケーションを実行する
 	virtual void Run(std::shared_ptr<GLcontext> &context);
-
-	// 更新する
-	void Update();
 };

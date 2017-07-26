@@ -20,27 +20,7 @@ int APIENTRY wWinMain(
 		if (!context) {
 			throw std::exception("Can't create window");
 		}
-		auto thread = std::thread([&]() {
-			context->MakeCurrent();
-			app.ApplyCapabilities();
-			app.BindTextureAt(0);
-			while (!context->ShouldClose()) {
-				app.Render();
-				app.Update();
-				context->SwapBuffers();
-				std::this_thread::sleep_for(std::chrono::milliseconds(10));
-			}
-		});
-		auto ps4 = PS4joystick(GLFW_JOYSTICK_1);
-		auto axes = PS4axes();
-		while (!context->ShouldClose()) {
-			//glfwWaitEvents();
-			glfwPollEvents();
-			ps4.Poll(axes);
-			axes(app);
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
-		}
-		thread.join();
+		app.Run(context);
 	}
 	catch (const std::exception &e) {
 		MessageBox(nullptr, e.what(), nullptr, MB_ICONHAND);

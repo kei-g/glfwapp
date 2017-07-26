@@ -1,6 +1,7 @@
 #include "MyApplication.h"
 
 #include "GLmaterial.h"
+#include "PS4joystick.h"
 
 #include "cage.hpp"
 #include "resource.h"
@@ -224,6 +225,43 @@ void MyApplication::Render()
 	target->Draw(rotation);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
+
+void MyApplication::Run(std::shared_ptr<GLcontext> &context)
+{
+	// 描画スレッド
+	auto thread = std::thread([&]() {
+		context->MakeCurrent();
+		ApplyCapabilities();
+		BindTextureAt(0);
+		while (!context->ShouldClose()) {
+			Render();
+			Update();
+			context->SwapBuffers();
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		}
+	});
+
+	// PS4コントローラ
+	auto ps4 = PS4joystick(GLFW_JOYSTICK_1);
+
+	// 入力監視
+	while (!context->ShouldClose()) {
+		glfwPollEvents();
+
+		// PS4コントローラの状態
+		auto axes = PS4axes();
+		ps4.Poll(axes);
+
+		// アプリケーションに反映
+		axes(*this);
+
+		// 待機
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+
+	// 描画スレッドが終了するまで待機
+	thread.join();
 }
 
 void MyApplication::Update()

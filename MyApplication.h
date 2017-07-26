@@ -92,6 +92,9 @@ public:
 	// 描画する
 	void Render();
 
+	// アプリケーションを実行する
+	virtual void Run(std::shared_ptr<GLcontext> &context);
+
 	// 更新する
 	void Update();
 };

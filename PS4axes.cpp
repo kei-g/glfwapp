@@ -18,11 +18,11 @@ PS4axes::~PS4axes()
 
 void PS4axes::operator()(GLcamera &camera) const
 {
-	camera.gaze.x = fmod(camera.gaze.x + R3.x * 2, 360);
-	camera.gaze.y = cage::clip(-45.0, camera.gaze.y + R3.y, 45.0);
+	camera.gaze.x = fmod(camera.gaze.x - R3.x * 2, 360);
+	camera.gaze.y = cage::clip(-85.0, camera.gaze.y - R3.y, 85.0);
 
-	const auto q = make_quaternion<double>(GLpoint3d(0, 1, 0), (camera.gaze.x + 90) * M_PI / 180);
-	auto d = (~q * GLpoint3d(L3.x, 0, L3.y) * q).imag<GLpoint3d>();
+	const auto q = make_quaternion<double>(GLpoint3d(0, 0, -1), (camera.gaze.x - 90) * M_PI / 180);
+	auto d = (~q * GLpoint3d(L3.x, L3.y, 0) * q).imag<GLpoint3d>();
 	d *= static_cast<double>(1) / 64;
 	camera += d;
 }

@@ -8,9 +8,6 @@ struct GLpoint
 	// デフォルトコンストラクタ
 	GLpoint()
 	{
-		for (auto i = size_t(); i < N; i++) {
-			new(val + i)T();
-		}
 	}
 
 	// コンストラクタ
@@ -32,18 +29,18 @@ struct GLpoint
 	}
 
 	// コピーコンストラクタ
-	GLpoint(const GLpoint<T, N> &p)
+	GLpoint(const GLpoint<T, N> &point)
 	{
 		for (auto i = size_t(); i < N; i++) {
-			new(val + i)T(p.val[i]);
+			new(val + i)T(point[i]);
 		}
 	}
 
 	// ムーブコンストラクタ
-	GLpoint(GLpoint<T, N> &&p)
+	GLpoint(GLpoint<T, N> &&point)
 	{
 		for (auto i = size_t(); i < N; i++) {
-			new(val + i)T(p.val[i]);
+			new(val + i)T(point[i]);
 		}
 	}
 
@@ -64,6 +61,18 @@ struct GLpoint
 		return val;
 	}
 
+	// インデックス
+	const T &operator[](size_t index) const
+	{
+		return val[index];
+	}
+
+	// インデックス
+	T &operator[](size_t index)
+	{
+		return val[index];
+	}
+
 	// 加算
 	virtual GLpoint<T, N> &operator +=(const GLpoint<T, N> &point)
 	{
@@ -71,6 +80,16 @@ struct GLpoint
 			val[i] += point[i];
 		}
 		return *this;
+	}
+
+	// 乗算
+	virtual GLpoint<T, N> operator +(const GLpoint<T, N> &point) const
+	{
+		auto v = GLpoint<T, N>();
+		for (auto i = size_t(); i < N; i++) {
+			new(v.val + i)T(val[i] + point[i]);
+		}
+		return v;
 	}
 
 	// 乗算
@@ -82,12 +101,22 @@ struct GLpoint
 		return *this;
 	}
 
+	// 乗算
+	virtual GLpoint<T, N> operator *(const T arg) const
+	{
+		auto v = GLpoint<T, N>();
+		for (auto i = size_t(); i < N; i++) {
+			new(v.val + i)T(val[i] * arg);
+		}
+		return v;
+	}
+
 	// 内積
 	virtual T dot(const GLpoint<T, N> &point) const
 	{
 		auto d = T();
 		for (auto i = size_t(); i < N; i++) {
-			d += val[i] * point.val[i];
+			d += val[i] * point[i];
 		}
 		return d;
 	}

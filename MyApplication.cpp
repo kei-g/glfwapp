@@ -166,14 +166,12 @@ void MyApplication::Render()
 	GLmaterial::Jade(GL_FRONT);
 	glBegin(GL_LINES);
 	for (auto i = -10; i <= 10; i++) {
-		glVertex3d(i, -1, -10);
-		glVertex3d(i, -1, +10);
-		glVertex3d(-10, -1, i);
-		glVertex3d(+10, -1, i);
-		glVertex3d(i, 1, -10);
-		glVertex3d(i, 1, +10);
-		glVertex3d(-10, 1, i);
-		glVertex3d(+10, 1, i);
+		for (auto j = 0; j < 2; j++) {
+			glVertex3i(-10, i, j * 2 - 1);
+			glVertex3i(+10, i, j * 2 - 1);
+			glVertex3i(i, -10, j * 2 - 1);
+			glVertex3i(i, +10, j * 2 - 1);
+		}
 	}
 	glEnd();
 

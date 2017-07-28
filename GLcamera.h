@@ -11,10 +11,19 @@ struct GLcamera : public GLpoint3d
 	GLcamera();
 
 	// コンストラクタ
-	GLcamera(double x, double y, double z, double direction = 0);
+	GLcamera(double x, double y, double z, double azimuth = 0, double elevation = 0);
+
+	// 視線から任意のオブジェクトを生成する
+	template<typename T, typename P>
+	inline T Gaze(const P &predicate) const
+	{
+		const auto azimuth = gaze.x * M_PI / 180;
+		const auto elevation = gaze.y * M_PI / 180;
+		return predicate(cos(azimuth), sin(azimuth), cos(elevation), sin(elevation));
+	}
 
 	// 視線ベクトル
-	GLpoint3d GetVector() const;
+	GLpoint3d GetGazeVector() const;
 
 	// 視線を適用する
 	void LookAt();

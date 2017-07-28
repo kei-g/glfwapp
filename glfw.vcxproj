@@ -22,7 +22,6 @@
     <ProjectGuid>{5F6FD871-234A-4AB6-BBBC-49F46A1A8DA7}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>glfw</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

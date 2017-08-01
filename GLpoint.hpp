@@ -92,6 +92,16 @@ struct GLpoint
 		return v;
 	}
 
+	// 減算
+	virtual GLpoint<T, N> operator -(const GLpoint<T, N> &point) const
+	{
+		auto v = GLpoint<T, N>();
+		for (auto i = size_t(); i < N; i++) {
+			new(v.val + i)T(val[i] - point[i]);
+		}
+		return v;
+	}
+
 	// 乗算
 	virtual GLpoint<T, N> &operator *=(const T arg)
 	{
@@ -140,13 +150,13 @@ struct GLpoint2 : public GLpoint<T, 2>
 	}
 
 	// コピーコンストラクタ
-	GLpoint2(const GLpoint2<T> &p)
+	GLpoint2(const GLpoint<T, 2> &p)
 		: GLpoint(p), x(val[0]), y(val[1])
 	{
 	}
 
 	// ムーブコンストラクタ
-	GLpoint2(GLpoint2<T> &&p)
+	GLpoint2(GLpoint<T, 2> &&p)
 		: GLpoint(p), x(val[0]), y(val[1])
 	{
 	}
@@ -180,13 +190,13 @@ struct GLpoint3 : public GLpoint<T, 3>
 	}
 
 	// コピーコンストラクタ
-	GLpoint3(const GLpoint3<T> &p)
+	GLpoint3(const GLpoint<T, 3> &p)
 		: GLpoint(p), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
 	// ムーブコンストラクタ
-	GLpoint3(GLpoint3<T> &&p)
+	GLpoint3(GLpoint<T, 3> &&p)
 		: GLpoint(std::move(p)), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
@@ -206,7 +216,7 @@ struct GLpoint3 : public GLpoint<T, 3>
 	}
 
 	// 外積
-	GLpoint3 cross(const GLpoint3 &point) const
+	GLpoint3 cross(const GLpoint3<T> &point) const
 	{
 		return GLpoint3(y * point.z - z * point.y, z * point.x - x * point.z, x * point.y - y * point.x);
 	}

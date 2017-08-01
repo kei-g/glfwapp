@@ -160,6 +160,7 @@
     <ClInclude Include="GLcolor4.hpp" />
     <ClInclude Include="GLcontext.h" />
     <ClInclude Include="glfw.h" />
+    <ClInclude Include="GLline.hpp" />
     <ClInclude Include="GLmaterial.h" />
     <ClInclude Include="GLpoint.hpp" />
     <ClInclude Include="GLquadric.h" />

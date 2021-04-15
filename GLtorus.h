@@ -5,6 +5,10 @@
 
 class GLtorus : public GLquadric
 {
+public:
+	// 開始オフセット(deg)
+	GLdouble offset;
+
 private:
 	// 小半径
 	GLdouble radiusInner;
@@ -17,10 +21,6 @@ private:
 
 	// 横方向
 	const std::vector<GLtorusVertex> stacks;
-
-public:
-	// 開始オフセット(deg)
-	GLdouble offset;
 
 private:
 	//

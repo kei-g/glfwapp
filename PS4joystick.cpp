@@ -33,6 +33,9 @@ PS4joystick::~PS4joystick()
 void PS4joystick::Poll(PS4axes &axes) const
 {
 	auto n = 0;
-	new(&axes)PS4axes(glfwGetJoystickAxes(id, &n));
-	ApplyThreshold(axes);
+	auto a = glfwGetJoystickAxes(id, &n);
+	if (a) {
+		new(&axes)PS4axes(a);
+		ApplyThreshold(axes);
+	}
 }

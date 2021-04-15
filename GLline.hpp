@@ -5,48 +5,48 @@
 template<template<typename> typename C, typename T>
 struct GLline
 {
-	// n“_
+	// å§‹ç‚¹
 	const C<T> a;
 
-	// I“_
+	// çµ‚ç‚¹
 	const C<T> b;
 
-	// ƒxƒNƒgƒ‹
+	// ãƒ™ã‚¯ãƒˆãƒ«
 	const C<T> v;
 
-	// ü•ª‚Ì’·‚³‚Ì2æ
+	// ç·šåˆ†ã®é•·ã•ã®2ä¹—
 	const T d;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLline()
 		: d(std::numeric_limits<double>().signaling_NaN())
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLline(const C<T> &a, const C<T> &b)
 		: a(a), b(b), v(b - a), d(v.dot(v))
 	{
 	}
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLline()
 	{
 	}
 
-	// ”}‰î•Ï”‚ğ“K—p‚·‚é
+	// åª’ä»‹å¤‰æ•°ã‚’é©ç”¨ã™ã‚‹
 	const C<T> operator()(const T &t) const
 	{
 		return a + v * t;
 	}
 
-	// ’¼ü‚Æ‚ÌŒğ“_‚ğ‹‚ß‚é
+	// ç›´ç·šã¨ã®äº¤ç‚¹ã‚’æ±‚ã‚ã‚‹
 	template<typename U>
 	bool GetCrossPoint(const GLline<C, T> &line, C<T> *c, U tolerance) const
 	{
 		const auto e = v.dot(line.v);
 		const auto det = e * e - d * line.d;
-		if (det == 0) { // •Às‚È‚Ì‚ÅŒğ‚í‚ç‚È‚¢
+		if (det == 0) { // ä¸¦è¡Œãªã®ã§äº¤ã‚ã‚‰ãªã„
 			return false;
 		}
 		const auto s = line.a - a;
@@ -63,7 +63,7 @@ struct GLline
 		return 0 <= m && m <= 1 && 0 <= n && n <= 1 && pq.dot(pq) <= tolerance * tolerance;
 	}
 
-	// ”CˆÓ‚ÌÀ•W‚©‚ç‚±‚Ì’¼ü‚É‚‚ë‚µ‚½‚ü‚Ì‘«‚ÌÀ•W‚ğ‹‚ß‚é
+	// ä»»æ„ã®åº§æ¨™ã‹ã‚‰ã“ã®ç›´ç·šã«å‚ã‚ã—ãŸå‚ç·šã®è¶³ã®åº§æ¨™ã‚’æ±‚ã‚ã‚‹
 	bool GetFootOfPerpendicular(const C<T> &point, C<T> *f, T *c = nullptr) const
 	{
 		const auto t = v.dot(p - a) / d;
@@ -80,10 +80,10 @@ struct GLline
 template<typename T>
 struct GLline2 : public GLline<GLpoint2, T>
 {
-	// •ûˆÊŠp
+	// æ–¹ä½è§’
 	const double azimuth;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLline2(const GLpoint<T, 2> &a, const GLpoint<T, 2> &b)
 		: GLline(a, b), azimuth(atan2(v.y, v.x))
 	{
@@ -97,13 +97,13 @@ typedef typename GLline2<int> GLline2i;
 template<typename T>
 struct GLline3 : public GLline<GLpoint3, T>
 {
-	// •ûˆÊŠp
+	// æ–¹ä½è§’
 	const double azimuth;
 
-	// ‹ÂŠp
+	// ä»°è§’
 	const double elevation;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLline3(const GLpoint<T, 3> &a, const GLpoint<T, 3> &b)
 		: GLline(a, b), azimuth(atan2(v.y, v.x)), elevation(atan2(v.z, sqrt(v.x * v.x + v.y * v.y)))
 	{

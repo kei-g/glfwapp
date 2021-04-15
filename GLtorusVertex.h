@@ -1,23 +1,23 @@
 #pragma once
 
-// ƒg[ƒ‰ƒX‚Ì’¸“_î•ñ
+// ãƒˆãƒ¼ãƒ©ã‚¹ã®é ‚ç‚¹æƒ…å ±
 struct GLtorusVertex
 {
-	// —]Œ·
+	// ä½™å¼¦
 	GLdouble cos;
 
-	// ³Œ·
+	// æ­£å¼¦
 	GLdouble sin;
 
-	// ”}‰î•Ï”
+	// åª’ä»‹å¤‰æ•°
 	GLdouble t;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLtorusVertex(GLdouble t, GLdouble radian);
 
-	// ƒg[ƒ‰ƒX‚Ì’¸“_î•ñ‚ğ¶¬‚·‚é
+	// ãƒˆãƒ¼ãƒ©ã‚¹ã®é ‚ç‚¹æƒ…å ±ã‚’ç”Ÿæˆã™ã‚‹
 	static std::vector<GLtorusVertex> Build(GLint N);
 
-	// ˆÃ–Ù‚ÌŒ^•ÏŠ·
+	// æš—é»™ã®å‹å¤‰æ›
 	operator GLdouble() const;
 };

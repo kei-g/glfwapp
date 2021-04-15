@@ -5,19 +5,19 @@
 class GLsphere : public GLquadric
 {
 private:
-	// ”¼Œa
+	// åŠå¾„
 	GLdouble radius;
 
-	// ‰¡•ûŒü‚Ì•ªŠ„”
+	// æ¨ªæ–¹å‘ã®åˆ†å‰²æ•°
 	GLint slices;
 
-	// c•ûŒü‚Ì•ªŠ„”
+	// ç¸¦æ–¹å‘ã®åˆ†å‰²æ•°
 	GLint stacks;
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLsphere(GLdouble radius, GLint slices, GLint stacks);
 
-	// •`‰æ‚·‚é
+	// æç”»ã™ã‚‹
 	virtual void Draw(GLdouble rotation);
 };

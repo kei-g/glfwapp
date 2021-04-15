@@ -1,6 +1,6 @@
 #include "GLsphere.h"
 
-// Ô“¹ŒXÎŠp
+// èµ¤é“å‚¾æ–œè§’
 constexpr auto Obliquity = 23.43;
 
 GLsphere::GLsphere(GLdouble radius, GLint slices, GLint stacks)
@@ -10,7 +10,7 @@ GLsphere::GLsphere(GLdouble radius, GLint slices, GLint stacks)
 
 void GLsphere::Draw(GLdouble rotation)
 {
-	glRotated(rotation, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // ’n²‚É‘Î‚·‚é‰ñ“]
-	glRotated(Obliquity - 90, 1, 0, 0); // ’n²‚ÌŒX‚«‚ğÄŒ»‚·‚é
+	glRotated(rotation, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // åœ°è»¸ã«å¯¾ã™ã‚‹å›è»¢
+	glRotated(Obliquity - 90, 1, 0, 0); // åœ°è»¸ã®å‚¾ãã‚’å†ç¾ã™ã‚‹
 	Sphere(radius, slices, stacks);
 }

@@ -1,51 +1,51 @@
 #pragma once
 
-// lŒ³”
+// å››å…ƒæ•°
 template<typename T>
 struct GLquaternion {
-	// ‹•”•”
+	// è™šæ•°éƒ¨
 	T i, j, k;
 
-	// À”•”
+	// å®Ÿæ•°éƒ¨
 	T w;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLquaternion()
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	template<typename U>
 	GLquaternion(const U i, const U j, const U k, const U w)
 		: i(static_cast<T>(i)), j(static_cast<T>(j)), k(static_cast<T>(k)), w(static_cast<T>(w))
 	{
 	}
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLquaternion()
 	{
 	}
 
-	// ‹¤–ğlŒ³”
+	// å…±å½¹å››å…ƒæ•°
 	virtual GLquaternion conj() const
 	{
 		return GLquaternion(-i, -j, -k, w);
 	}
 
-	// ‹•”•”
+	// è™šæ•°éƒ¨
 	template<typename U>
 	U imag() const
 	{
 		return U(i, j, k);
 	}
 
-	// ‹¤–ğlŒ³”
+	// å…±å½¹å››å…ƒæ•°
 	virtual GLquaternion operator~() const
 	{
 		return conj();
 	}
 
-	// æZ
+	// ä¹—ç®—
 	template<typename U>
 	GLquaternion operator*(const GLquaternion<U> &q) const
 	{
@@ -57,7 +57,7 @@ struct GLquaternion {
 		);
 	}
 
-	// æZ
+	// ä¹—ç®—
 	template<template<typename> typename C, typename U>
 	GLquaternion operator*(const C<U> &v) const
 	{
@@ -69,7 +69,7 @@ struct GLquaternion {
 		);
 	}
 
-	// Œ^•ÏŠ·
+	// å‹å¤‰æ›
 	template<typename U>
 	operator GLquaternion<U>() const
 	{
@@ -77,7 +77,7 @@ struct GLquaternion {
 	}
 };
 
-// ”CˆÓ‚Ì²‚É‘Î‚·‚é‰ñ“]‚Ì‚½‚ß‚ÌlŒ³”
+// ä»»æ„ã®è»¸ã«å¯¾ã™ã‚‹å›è»¢ã®ãŸã‚ã®å››å…ƒæ•°
 template<typename T, template<typename> typename C, typename U>
 static auto make_quaternion(const C<U> &v, double theta)
 {

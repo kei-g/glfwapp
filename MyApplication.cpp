@@ -23,10 +23,10 @@ void MyApplication::ApplyCapabilities()
 void MyApplication::BindTextureAt(size_t pos)
 {
 	if (textures.empty()) {
-		// ƒŠƒ\[ƒXID
+		// ãƒªã‚½ãƒ¼ã‚¹ID
 		constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
 
-		// ƒŠƒ\[ƒX‚©‚çƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
+		// ãƒªã‚½ãƒ¼ã‚¹ã‹ã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿæˆã™ã‚‹
 		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
 	}
 
@@ -153,16 +153,16 @@ void MyApplication::Render()
 	glLoadIdentity();
 	LookAt();
 
-	// Á‹
+	// æ¶ˆå»
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// ƒJƒƒ‰‚ÌˆÊ’u‚ÉŒõŒ¹‚ğ”z’u
-	glLightfv(GL_LIGHT0, GL_POSITION, static_cast<GLpoint3f>(*this) + 1); // 0: •ÀsŒõŒ¹, 0ˆÈŠO: “_ŒõŒ¹
+	// ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã«å…‰æºã‚’é…ç½®
+	glLightfv(GL_LIGHT0, GL_POSITION, static_cast<GLpoint3f>(*this) + 1); // 0: ä¸¦è¡Œå…‰æº, 0ä»¥å¤–: ç‚¹å…‰æº
 	glLightfv(GL_LIGHT0, GL_AMBIENT, static_cast<GLcolor4f>(GLcolor::Gray));
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, static_cast<GLcolor4f>(GLcolor::LightGray));
 	glLightfv(GL_LIGHT0, GL_SPECULAR, static_cast<GLcolor4f>(GLcolor::White));
 
-	// ƒOƒŠƒbƒh‚ğ•`‰æ‚·‚é
+	// ã‚°ãƒªãƒƒãƒ‰ã‚’æç”»ã™ã‚‹
 	GLmaterial::Jade(GL_FRONT);
 	glBegin(GL_LINES);
 	for (auto i = -10; i <= 10; i++) {
@@ -175,7 +175,7 @@ void MyApplication::Render()
 	}
 	glEnd();
 
-	// ƒIƒuƒWƒFƒNƒg‚ğ•`‰æ‚·‚é
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æç”»ã™ã‚‹
 	GLmaterial::Light(GL_FRONT);
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
@@ -192,13 +192,13 @@ void MyApplication::Setup()
 
 void MyApplication::Update()
 {
-	// ƒIƒuƒWƒFƒNƒg‚ğ‰ñ“]‚³‚¹‚é
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å›è»¢ã•ã›ã‚‹
 	rotation += 0.0625;
 	if (360 < rotation) {
 		rotation -= 360;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‰æ‘œ‚Ì“Ç‚İ‚İ—v‹‚ğˆ—‚·‚é
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”»åƒã®èª­ã¿è¾¼ã¿è¦æ±‚ã‚’å‡¦ç†ã™ã‚‹
 	if (!queue.empty()) {
 		auto pos = queue.front();
 		queue.pop_front();
@@ -249,10 +249,10 @@ std::shared_ptr<GLcontext> MyApplication::CreateContext(int width, int height, c
 
 void MyApplication::Run(std::shared_ptr<GLcontext> &context)
 {
-	// PS4ƒRƒ“ƒgƒ[ƒ‰“ü—ÍŠÄ‹ƒXƒŒƒbƒh
+	// PS4ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©å…¥åŠ›ç›£è¦–ã‚¹ãƒ¬ãƒƒãƒ‰
 	auto input = std::thread([&]() {
-		auto ps4 = PS4joystick(GLFW_JOYSTICK_1); // PS4ƒRƒ“ƒgƒ[ƒ‰
-		auto axes = PS4axes(); // PS4ƒRƒ“ƒgƒ[ƒ‰‚Ìó‘Ô
+		auto ps4 = PS4joystick(GLFW_JOYSTICK_1); // PS4ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©
+		auto axes = PS4axes(); // PS4ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ã®çŠ¶æ…‹
 		while (!context->ShouldClose()) {
 			ps4.Poll(axes);
 			axes(*this);
@@ -260,9 +260,9 @@ void MyApplication::Run(std::shared_ptr<GLcontext> &context)
 		}
 	});
 
-	// Šî’êƒNƒ‰ƒX‚Ìˆ—‚ğÀs‚·‚é
+	// åŸºåº•ã‚¯ãƒ©ã‚¹ã®å‡¦ç†ã‚’å®Ÿè¡Œã™ã‚‹
 	GLapplication::Run(context);
 
-	// PS4ƒRƒ“ƒgƒ[ƒ‰“ü—ÍŠÄ‹ƒXƒŒƒbƒh‚ªI—¹‚·‚é‚Ü‚Å‘Ò‹@
+	// PS4ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©å…¥åŠ›ç›£è¦–ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¾ã§å¾…æ©Ÿ
 	input.join();
 }

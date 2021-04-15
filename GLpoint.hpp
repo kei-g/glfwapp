@@ -5,30 +5,30 @@ struct GLpoint
 {
 	T val[N];
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint()
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint(T v1, T v2, T v3, T v4)
 		: val{ v1, v2, v3, v4 }
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint(T v1, T v2, T v3)
 		: val{ v1, v2, v3 }
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint(T v1, T v2)
 		: val{ v1, v2 }
 	{
 	}
 
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint(const GLpoint<T, N> &point)
 	{
 		for (auto i = size_t(); i < N; i++) {
@@ -36,7 +36,7 @@ struct GLpoint
 		}
 	}
 
-	// ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint(GLpoint<T, N> &&point)
 	{
 		for (auto i = size_t(); i < N; i++) {
@@ -44,36 +44,36 @@ struct GLpoint
 		}
 	}
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLpoint()
 	{
 	}
 
-	// ƒvƒŠƒ~ƒeƒBƒuƒ|ƒCƒ“ƒ^‚Ö‚Ì•ÏŠ·
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒã‚¤ãƒ³ã‚¿ã¸ã®å¤‰æ›
 	operator const T*() const
 	{
 		return val;
 	}
 
-	// ƒvƒŠƒ~ƒeƒBƒuƒ|ƒCƒ“ƒ^‚Ö‚Ì•ÏŠ·
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ãƒã‚¤ãƒ³ã‚¿ã¸ã®å¤‰æ›
 	operator T*()
 	{
 		return val;
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	const T &operator[](size_t index) const
 	{
 		return val[index];
 	}
 
-	// ƒCƒ“ƒfƒbƒNƒX
+	// ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	T &operator[](size_t index)
 	{
 		return val[index];
 	}
 
-	// ‰ÁZ
+	// åŠ ç®—
 	virtual GLpoint<T, N> &operator +=(const GLpoint<T, N> &point)
 	{
 		for (auto i = size_t(); i < N; i++) {
@@ -82,7 +82,7 @@ struct GLpoint
 		return *this;
 	}
 
-	// æZ
+	// ä¹—ç®—
 	virtual GLpoint<T, N> operator +(const GLpoint<T, N> &point) const
 	{
 		auto v = GLpoint<T, N>();
@@ -92,7 +92,7 @@ struct GLpoint
 		return v;
 	}
 
-	// Œ¸Z
+	// æ¸›ç®—
 	virtual GLpoint<T, N> operator -(const GLpoint<T, N> &point) const
 	{
 		auto v = GLpoint<T, N>();
@@ -102,7 +102,7 @@ struct GLpoint
 		return v;
 	}
 
-	// æZ
+	// ä¹—ç®—
 	virtual GLpoint<T, N> &operator *=(const T arg)
 	{
 		for (auto i = size_t(); i < N; i++) {
@@ -111,7 +111,7 @@ struct GLpoint
 		return *this;
 	}
 
-	// æZ
+	// ä¹—ç®—
 	virtual GLpoint<T, N> operator *(const T arg) const
 	{
 		auto v = GLpoint<T, N>();
@@ -121,7 +121,7 @@ struct GLpoint
 		return v;
 	}
 
-	// “àÏ
+	// å†…ç©
 	virtual T dot(const GLpoint<T, N> &point) const
 	{
 		auto d = T();
@@ -137,31 +137,31 @@ struct GLpoint2 : public GLpoint<T, 2>
 {
 	T &x, &y;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint2()
 		: GLpoint(), x(val[0]), y(val[1])
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint2(T x, T y)
 		: GLpoint(x, y), x(val[0]), y(val[1])
 	{
 	}
 
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint2(const GLpoint<T, 2> &p)
 		: GLpoint(p), x(val[0]), y(val[1])
 	{
 	}
 
-	// ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint2(GLpoint<T, 2> &&p)
 		: GLpoint(p), x(val[0]), y(val[1])
 	{
 	}
 
-	// Œ^•ÏŠ·
+	// å‹å¤‰æ›
 	template<typename U>
 	operator GLpoint2<U>() const
 	{
@@ -177,45 +177,45 @@ struct GLpoint3 : public GLpoint<T, 3>
 {
 	T &x, &y, &z;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint3()
 		: GLpoint(), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint3(T x, T y, T z)
 		: GLpoint(x, y, z), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
-	// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint3(const GLpoint<T, 3> &p)
 		: GLpoint(p), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
-	// ƒ€[ƒuƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ ãƒ¼ãƒ–ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLpoint3(GLpoint<T, 3> &&p)
 		: GLpoint(std::move(p)), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
-	// Œ^•ÏŠ·
+	// å‹å¤‰æ›
 	template<typename U>
 	operator GLpoint3<U>() const
 	{
 		return GLpoint3<U>{ static_cast<U>(x), static_cast<U>(y), static_cast<U>(z) };
 	}
 
-	// Œ^•ÏŠ·
+	// å‹å¤‰æ›
 	template<typename U>
 	GLpoint<T, 4> operator +(U w) const
 	{
 		return GLpoint<T, 4>{ x, y, z, static_cast<T>(w) };
 	}
 
-	// ŠOÏ
+	// å¤–ç©
 	GLpoint3 cross(const GLpoint3<T> &point) const
 	{
 		return GLpoint3(y * point.z - z * point.y, z * point.x - x * point.z, x * point.y - y * point.x);

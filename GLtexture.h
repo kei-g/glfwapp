@@ -3,48 +3,48 @@
 class GLtexture
 {
 private:
-	// ‰æ‘œƒf[ƒ^
+	// ç”»åƒãƒ‡ãƒ¼ã‚¿
 	std::shared_ptr<std::tuple<void*, int, int>> image;
 
-	// “Ç‚İ‚İÏ‚İ
+	// èª­ã¿è¾¼ã¿æ¸ˆã¿
 	bool loaded;
 
-	// ƒŠƒ\[ƒXID
+	// ãƒªã‚½ãƒ¼ã‚¹ID
 	int resourceID;
 
-	// ƒŠƒ\[ƒXƒf[ƒ^
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿
 	LPVOID resourceData;
 
-	// ƒŠƒ\[ƒXƒf[ƒ^ƒTƒCƒY
+	// ãƒªã‚½ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 	DWORD resourceSize;
 
-	// ƒeƒNƒXƒ`ƒƒID
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ID
 	GLuint textureID;
 
 private:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLtexture(GLuint textureID, HGLOBAL resource, DWORD resourceSize);
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLtexture(GLuint textureID, HMODULE hModule, HRSRC resourceInfo);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ö‰æ‘œƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	void Load();
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLtexture(GLuint textureID, HMODULE hModule, int resourceID, LPCTSTR resourceType);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLtexture();
 
-	// ‚±‚ÌƒeƒNƒXƒ`ƒƒ‚ğg‚¤
+	// ã“ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä½¿ã†
 	void Bind();
 
-	// ƒŠƒ\[ƒX‚©‚ç‰æ‘œƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	// ãƒªã‚½ãƒ¼ã‚¹ã‹ã‚‰ç”»åƒãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	void Read();
 
-	// ƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿæˆã™ã‚‹
 	template<size_t N>
 	static void Generate(std::vector<GLtexture> *textures, HMODULE hModule, const int(&resourceIDs)[N], LPCTSTR resourceType)
 	{

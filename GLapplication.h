@@ -7,25 +7,25 @@ class GLapplication
 	friend class GLcontext;
 
 protected:
-	// •`‰æ‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// æç”»ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Render() = 0;
 
-	// ‰Šú‰»‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// åˆæœŸåŒ–ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Setup() = 0;
 
-	// XV‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// æ›´æ–°ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Update() = 0;
 
 public:
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLapplication();
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLapplication();
 
-	// ƒEƒBƒ“ƒhƒE‚ğ¶¬‚·‚é
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç”Ÿæˆã™ã‚‹
 	virtual std::shared_ptr<GLcontext> CreateContext(int width, int height, const char *title);
 
-	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğÀs‚·‚é[ƒƒCƒ“ƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œã™ã‚‹[ãƒ¡ã‚¤ãƒ³ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Run(std::shared_ptr<GLcontext> &context);
 };

@@ -9,12 +9,12 @@ private:
 	const int id;
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	PS4joystick(int id);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~PS4joystick();
 
-	// ó‘Ô‚ğæ“¾‚·‚é
+	// çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	void Poll(PS4axes &axes) const;
 };

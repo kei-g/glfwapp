@@ -9,27 +9,27 @@ struct GLmaterial
 	GLcolor4f specular;
 	GLfloat shininess;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLmaterial();
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLmaterial(const GLcolor4f &ambient, const GLcolor4f &diffuse, const GLcolor4f &specular, GLfloat shininess = 32.0f);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLmaterial();
 
-	// ‚±‚ÌŞ¿‚ğ“K—p‚·‚é
+	// ã“ã®æè³ªã‚’é©ç”¨ã™ã‚‹
 	void operator()(GLenum face) const;
 
-	// ãÅ‰
+	// ç¿¡ç¿ 
 	static const GLmaterial Jade;
 
-	// –¾‚é‚¢
+	// æ˜ã‚‹ã„
 	static const GLmaterial Light;
 
-	// ƒ‹ƒr[
+	// ãƒ«ãƒ“ãƒ¼
 	static const GLmaterial Ruby;
 
-	// ”’
+	// ç™½
 	static const GLmaterial White;
 };

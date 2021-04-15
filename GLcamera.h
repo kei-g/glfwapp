@@ -4,16 +4,16 @@
 
 struct GLcamera : public GLpoint3d
 {
-	// ‹ü‚ÌŒü‚«(deg)
+	// è¦–ç·šã®å‘ã(deg)
 	GLpoint2d gaze;
 
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLcamera();
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLcamera(double x, double y, double z, double azimuth = 0, double elevation = 0);
 
-	// ‹ü‚©‚ç”CˆÓ‚ÌƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
+	// è¦–ç·šã‹ã‚‰ä»»æ„ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 	template<typename T, typename P>
 	inline T Gaze(const P &predicate) const
 	{
@@ -22,15 +22,15 @@ struct GLcamera : public GLpoint3d
 		return predicate(cos(azimuth), sin(azimuth), cos(elevation), sin(elevation));
 	}
 
-	// ‹üƒxƒNƒgƒ‹
+	// è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
 	GLpoint3d GetGazeVector() const;
 
-	// ‹ü‚ğ“K—p‚·‚é
+	// è¦–ç·šã‚’é©ç”¨ã™ã‚‹
 	void LookAt();
 
-	// ‹ü‚Ì•ûŒü‚Öi‚Ş
+	// è¦–ç·šã®æ–¹å‘ã¸é€²ã‚€
 	void MoveAhead(double distance);
 
-	// ‰¡•ûŒü‚ÉˆÚ“®‚·‚é
+	// æ¨ªæ–¹å‘ã«ç§»å‹•ã™ã‚‹
 	void Shift(double distance);
 };

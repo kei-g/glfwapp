@@ -6,28 +6,28 @@ protected:
 	GLUquadric *state;
 
 public:
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLquadric();
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLquadric(GLUquadric *state);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~GLquadric();
 
 public:
-	// •`‰æ‚·‚é
+	// æç”»ã™ã‚‹
 	virtual void Draw(GLdouble rotation) = 0;
 
-	// ƒeƒNƒXƒ`ƒƒ—LŒø
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£æœ‰åŠ¹
 	void EnableTexture();
 
-	// •`‰æ•û®
+	// æç”»æ–¹å¼
 	void SetDrawStyle(GLenum drawStyle);
 
-	// –@ü
+	// æ³•ç·š
 	void SetNormals(GLenum normals);
 
-	// ‹…‘Ì‚ğ•`‰æ‚·‚é
+	// çƒä½“ã‚’æç”»ã™ã‚‹
 	void Sphere(GLdouble radius, GLint slices, GLint stacks);
 };

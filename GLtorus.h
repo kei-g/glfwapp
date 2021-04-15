@@ -6,20 +6,20 @@
 class GLtorus : public GLquadric
 {
 private:
-	// ¬”¼Œa
+	// å°åŠå¾„
 	GLdouble radiusInner;
 
-	// ‘å”¼Œa
+	// å¤§åŠå¾„
 	GLdouble radiusOuter;
 
-	// c•ûŒü
+	// ç¸¦æ–¹å‘
 	const std::vector<GLtorusVertex> slices;
 
-	// ‰¡•ûŒü
+	// æ¨ªæ–¹å‘
 	const std::vector<GLtorusVertex> stacks;
 
 public:
-	// ŠJnƒIƒtƒZƒbƒg(deg)
+	// é–‹å§‹ã‚ªãƒ•ã‚»ãƒƒãƒˆ(deg)
 	GLdouble offset;
 
 private:
@@ -27,9 +27,9 @@ private:
 	void Draw(const GLtorusVertex &s, const GLtorusVertex &t) const;
 
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	GLtorus(GLdouble radiusOuter, GLdouble radiusInner, GLint slices, GLint stacks);
 
-	// •`‰æ‚·‚é
+	// æç”»ã™ã‚‹
 	virtual void Draw(GLdouble rotation);
 };

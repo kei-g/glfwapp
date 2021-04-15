@@ -5,27 +5,27 @@
 
 struct PS4axes
 {
-	// L2軸
+	// L2霆ｸ
 	float L2;
 
-	// L3軸
+	// L3霆ｸ
 	GLpoint2f L3;
 
-	// R2軸
+	// R2霆ｸ
 	float R2;
 
-	// R3軸
+	// R3霆ｸ
 	GLpoint2f R3;
 
-	// デフォルトコンストラクタ
+	// 繝�繝輔か繝ｫ繝医さ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	PS4axes();
 
-	// コンストラクタ
+	// 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ
 	PS4axes(const float *axes);
 
-	// デストラクタ
+	// 繝�繧ｹ繝医Λ繧ｯ繧ｿ
 	virtual ~PS4axes();
 
-	// カメラに適用する
+	// 繧ｫ繝｡繝ｩ縺ｫ驕ｩ逕ｨ縺吶ｋ
 	virtual void operator()(GLcamera &camera) const;
 };

@@ -51,7 +51,7 @@ void GLcontext::MakeCurrent()
 
 void GLcontext::Run()
 {
-	// •`‰æƒXƒŒƒbƒh
+	// æç”»ã‚¹ãƒ¬ãƒƒãƒ‰
 	auto renderer = std::thread([&]() {
 		MakeCurrent();
 		app.Setup();
@@ -62,12 +62,12 @@ void GLcontext::Run()
 		}
 	});
 
-	// ƒCƒxƒ“ƒgƒ‹[ƒv
+	// ã‚¤ãƒ™ãƒ³ãƒˆãƒ«ãƒ¼ãƒ—
 	while (!ShouldClose()) {
 		glfwWaitEvents();
 	}
 
-	// •`‰æƒXƒŒƒbƒh‚ªI—¹‚·‚é‚Ü‚Å‘Ò‹@
+	// æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ãŒçµ‚äº†ã™ã‚‹ã¾ã§å¾…æ©Ÿ
 	renderer.join();
 }
 

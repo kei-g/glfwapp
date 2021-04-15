@@ -9,96 +9,96 @@
 class MyApplication : public GLapplication, public GLcamera {
 private:
 	struct DragContext {
-		// ƒ{ƒ^ƒ“
+		// ãƒœã‚¿ãƒ³
 		const int button;
 
-		// ‘O‰ñ‚ÌÀ•W
+		// å‰å›ã®åº§æ¨™
 		GLpoint2d last;
 
-		// ó‘Ô
+		// çŠ¶æ…‹
 		const int mods;
 
-		// ƒhƒ‰ƒbƒOŠJnÀ•W
+		// ãƒ‰ãƒ©ãƒƒã‚°é–‹å§‹åº§æ¨™
 		const GLpoint2d origin;
 
-		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		DragContext(int button, int mods, const GLpoint2d &cursor)
 			: button(button), last(cursor), mods(mods), origin(origin)
 		{
 		}
 	};
 
-	// ƒAƒXƒyƒNƒg”ä
+	// ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
 	GLdouble aspect;
 
-	// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌÀ•W
+	// ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®åº§æ¨™
 	GLpoint2d cursor;
 
-	// ƒhƒ‰ƒbƒOî•ñ
+	// ãƒ‰ãƒ©ãƒƒã‚°æƒ…å ±
 	std::shared_ptr<DragContext> dragContext;
 
-	// ƒeƒNƒXƒ`ƒƒ‰æ‘œ‚Ì“Ç‚İ‚İ—v‹
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”»åƒã®èª­ã¿è¾¼ã¿è¦æ±‚
 	std::deque<size_t> queue;
 
-	// ‰ñ“]
+	// å›è»¢
 	GLdouble rotation;
 
-	// ‹…–Ê
+	// çƒé¢
 	GLsphere sphere;
 
-	// •`‰æ‘ÎÛ
+	// æç”»å¯¾è±¡
 	GLquadric *target;
 
-	// ƒeƒNƒXƒ`ƒƒ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	std::vector<GLtexture> textures;
 
-	// ƒg[ƒ‰ƒX
+	// ãƒˆãƒ¼ãƒ©ã‚¹
 	GLtorus torus;
 
-	// ƒEƒBƒ“ƒhƒE‚Ì‚‚³
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®é«˜ã•
 	int windowHeight;
 
-	// ƒEƒBƒ“ƒhƒE‚Ì•
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å¹…
 	int windowWidth;
 
-	// •K—v‚È‹@”\‚ğ—LŒø‚É‚·‚é
+	// å¿…è¦ãªæ©Ÿèƒ½ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 	void ApplyCapabilities();
 
-	// g—p‚·‚éƒeƒNƒXƒ`ƒƒ‚ğw’è‚·‚é
+	// ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’æŒ‡å®šã™ã‚‹
 	void BindTextureAt(size_t pos);
 
-	// ƒJ[ƒ\ƒ‹ƒCƒxƒ“ƒg‚ğˆ—‚·‚é
+	// ã‚«ãƒ¼ã‚½ãƒ«ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹
 	void CursorEvent(GLdouble x, GLdouble y);
 
-	// ƒhƒ‰ƒbƒOƒCƒxƒ“ƒg‚ğˆ—‚·‚é
+	// ãƒ‰ãƒ©ãƒƒã‚°ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹
 	void DragEvent(GLdouble dx, GLdouble dy);
 
-	// ƒL[ƒCƒxƒ“ƒg‚ğˆ—‚·‚é
+	// ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹
 	void KeyEvent(int key, int scan, int action, int mods);
 
-	// ƒ}ƒEƒXƒCƒxƒ“ƒg‚ğˆ—‚·‚é
+	// ãƒã‚¦ã‚¹ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹
 	void MouseEvent(int button, int action, int mods);
 
-	// ƒXƒNƒ[ƒ‹ƒCƒxƒ“ƒg‚ğˆ—‚·‚é
+	// ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‡¦ç†ã™ã‚‹
 	void ScrollEvent(double x, double y);
 
 protected:
-	// •`‰æ‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// æç”»ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Render();
 
-	// ‰Šú‰»‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// åˆæœŸåŒ–ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Setup();
 
-	// XV‚·‚é[•`‰æƒXƒŒƒbƒh‚©‚çŒÄ‚Î‚ê‚é]
+	// æ›´æ–°ã™ã‚‹[æç”»ã‚¹ãƒ¬ãƒƒãƒ‰ã‹ã‚‰å‘¼ã°ã‚Œã‚‹]
 	virtual void Update();
 
 public:
-	// ƒfƒtƒHƒ‹ƒgƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	MyApplication();
 
-	// ƒEƒBƒ“ƒhƒE‚ğ¶¬‚·‚é
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç”Ÿæˆã™ã‚‹
 	virtual std::shared_ptr<GLcontext> CreateContext(int width, int height, const char *title);
 
-	// ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğÀs‚·‚é
+	// ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œã™ã‚‹
 	virtual void Run(std::shared_ptr<GLcontext> &context);
 };

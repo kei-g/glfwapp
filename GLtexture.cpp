@@ -20,7 +20,7 @@ void GLtexture::Load()
 	}
 
 	if (!image) {
-		throw std::exception("Image has not read yet");
+		throw std::runtime_error("Image has not read yet");
 	}
 
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, std::get<1>(*image), std::get<2>(*image), GL_RGB, GL_UNSIGNED_BYTE, std::get<0>(*image));
@@ -63,7 +63,7 @@ void GLtexture::Read()
 	auto w = 0, h = 0, c = 0;
 	auto img = stbi_load_from_memory(static_cast<stbi_uc *>(resourceData), static_cast<int>(resourceSize), &w, &h, &c, 0);
 	if (!img) {
-		throw std::exception("Can't decompress image from resource");
+		throw std::runtime_error("Can't decompress image from resource");
 	}
 
 	image = std::make_shared<std::tuple<void*, int, int>>(img, w, h);

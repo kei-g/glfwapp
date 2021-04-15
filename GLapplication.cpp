@@ -3,7 +3,7 @@
 GLapplication::GLapplication()
 {
 	if (!glfwInit()) {
-		throw std::exception("Can't initialize GLFW");
+		throw std::runtime_error("Can't initialize GLFW");
 	}
 }
 

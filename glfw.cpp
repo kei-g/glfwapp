@@ -18,7 +18,7 @@ int APIENTRY wWinMain(
 		auto app = MyApplication();
 		auto context = app.CreateContext(1280, 720, "glfw");
 		if (!context) {
-			throw std::exception("Can't create window");
+			throw std::runtime_error("Can't create window");
 		}
 		app.Run(context);
 	}

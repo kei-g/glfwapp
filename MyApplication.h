@@ -23,7 +23,7 @@ private:
 
 		// コンストラクタ
 		DragContext(int button, int mods, const GLpoint2d &cursor)
-			: button(button), last(cursor), mods(mods), origin(origin)
+			: button(button), last(cursor), mods(mods), origin(cursor)
 		{
 		}
 	};

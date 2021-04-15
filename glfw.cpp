@@ -1,4 +1,4 @@
-#include "glfw.h"
+#include "glfw.hpp"
 
 int APIENTRY wWinMain(
 	_In_ HINSTANCE hInstance,

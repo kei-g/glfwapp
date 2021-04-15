@@ -2,8 +2,9 @@
 
 #include "GLcolor4.hpp"
 
-struct GLmaterial
+class GLmaterial
 {
+public:
 	GLcolor4f ambient;
 	GLcolor4f diffuse;
 	GLcolor4f specular;

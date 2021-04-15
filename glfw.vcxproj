@@ -159,7 +159,7 @@
     <ClInclude Include="GLcamera.h" />
     <ClInclude Include="GLcolor4.hpp" />
     <ClInclude Include="GLcontext.h" />
-    <ClInclude Include="glfw.h" />
+    <ClInclude Include="glfw.hpp" />
     <ClInclude Include="GLline.hpp" />
     <ClInclude Include="GLmaterial.h" />
     <ClInclude Include="GLpoint.hpp" />

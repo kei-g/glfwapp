@@ -137,29 +137,55 @@ struct GLpoint2 : public GLpoint<T, 2>
 {
 	T &x, &y;
 
+#if defined(_MSC_VER)
 	// デフォルトコンストラクタ
 	GLpoint2()
-		: GLpoint(), x(val[0]), y(val[1])
+		: GLpoint<T, 2>(), x(val[0]), y(val[1])
 	{
 	}
 
 	// コンストラクタ
 	GLpoint2(T x, T y)
-		: GLpoint(x, y), x(val[0]), y(val[1])
+		: GLpoint<T, 2>(x, y), x(val[0]), y(val[1])
 	{
 	}
 
 	// コピーコンストラクタ
 	GLpoint2(const GLpoint<T, 2> &p)
-		: GLpoint(p), x(val[0]), y(val[1])
+		: GLpoint<T, 2>(p), x(val[0]), y(val[1])
 	{
 	}
 
 	// ムーブコンストラクタ
 	GLpoint2(GLpoint<T, 2> &&p)
-		: GLpoint(p), x(val[0]), y(val[1])
+		: GLpoint<T, 2>(p), x(val[0]), y(val[1])
 	{
 	}
+#else
+	// デフォルトコンストラクタ
+	GLpoint2()
+		: GLpoint<T, 2>(), x(this->val[0]), y(this->val[1])
+	{
+	}
+
+	// コンストラクタ
+	GLpoint2(T x, T y)
+		: GLpoint<T, 2>(x, y), x(this->val[0]), y(this->val[1])
+	{
+	}
+
+	// コピーコンストラクタ
+	GLpoint2(const GLpoint<T, 2> &p)
+		: GLpoint<T, 2>(p), x(this->val[0]), y(this->val[1])
+	{
+	}
+
+	// ムーブコンストラクタ
+	GLpoint2(GLpoint<T, 2> &&p)
+		: GLpoint<T, 2>(p), x(this->val[0]), y(this->val[1])
+	{
+	}
+#endif
 
 	// 型変換
 	template<typename U>
@@ -169,37 +195,68 @@ struct GLpoint2 : public GLpoint<T, 2>
 	}
 };
 
+#if defined(_MSC_VER)
 typedef typename GLpoint2<GLdouble> GLpoint2d;
 typedef typename GLpoint2<GLfloat> GLpoint2f;
+#else
+typedef typename ::GLpoint2<GLdouble> GLpoint2d;
+typedef typename ::GLpoint2<GLfloat> GLpoint2f;
+#endif
 
 template<typename T>
 struct GLpoint3 : public GLpoint<T, 3>
 {
 	T &x, &y, &z;
 
+#if defined(_MSC_VER)
 	// デフォルトコンストラクタ
 	GLpoint3()
-		: GLpoint(), x(val[0]), y(val[1]), z(val[2])
+		: GLpoint<T, 3>(), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
 	// コンストラクタ
 	GLpoint3(T x, T y, T z)
-		: GLpoint(x, y, z), x(val[0]), y(val[1]), z(val[2])
+		: GLpoint<T, 3>(x, y, z), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
 	// コピーコンストラクタ
 	GLpoint3(const GLpoint<T, 3> &p)
-		: GLpoint(p), x(val[0]), y(val[1]), z(val[2])
+		: GLpoint<T, 3>(p), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
 
 	// ムーブコンストラクタ
 	GLpoint3(GLpoint<T, 3> &&p)
-		: GLpoint(std::move(p)), x(val[0]), y(val[1]), z(val[2])
+		: GLpoint<T, 3>(std::move(p)), x(val[0]), y(val[1]), z(val[2])
 	{
 	}
+#else
+	// デフォルトコンストラクタ
+	GLpoint3()
+		: GLpoint<T, 3>(), x(this->val[0]), y(this->val[1]), z(this->val[2])
+	{
+	}
+
+	// コンストラクタ
+	GLpoint3(T x, T y, T z)
+		: GLpoint<T, 3>(x, y, z), x(this->val[0]), y(this->val[1]), z(this->val[2])
+	{
+	}
+
+	// コピーコンストラクタ
+	GLpoint3(const GLpoint<T, 3> &p)
+		: GLpoint<T, 3>(p), x(this->val[0]), y(this->val[1]), z(this->val[2])
+	{
+	}
+
+	// ムーブコンストラクタ
+	GLpoint3(GLpoint<T, 3> &&p)
+		: GLpoint<T, 3>(std::move(p)), x(this->val[0]), y(this->val[1]), z(this->val[2])
+	{
+	}
+#endif
 
 	// 型変換
 	template<typename U>
@@ -222,5 +279,10 @@ struct GLpoint3 : public GLpoint<T, 3>
 	}
 };
 
+#if defined(_MSC_VER)
 typedef typename GLpoint3<GLdouble> GLpoint3d;
 typedef typename GLpoint3<GLfloat> GLpoint3f;
+#else
+typedef typename ::GLpoint3<GLdouble> GLpoint3d;
+typedef typename ::GLpoint3<GLfloat> GLpoint3f;
+#endif

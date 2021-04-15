@@ -4,7 +4,10 @@
 #include "PS4joystick.h"
 
 #include "cage.hpp"
+
+#if defined(_MSC_VER)
 #include "resource.h"
+#endif
 
 void MyApplication::ApplyCapabilities()
 {
@@ -23,11 +26,22 @@ void MyApplication::ApplyCapabilities()
 void MyApplication::BindTextureAt(size_t pos)
 {
 	if (textures.empty()) {
+#if defined(_MSC_VER)
 		// リソースID
 		constexpr int resourceIDs[] = { IDR_IMAGE_EARTH, IDR_IMAGE_DQ2, IDR_IMAGE_DQ3, IDR_IMAGE_DQ4, IDR_IMAGE_DQ5 };
 
 		// リソースからテクスチャを生成する
 		GLtexture::Generate(&textures, GetModuleHandle(nullptr), resourceIDs, TEXT("Image"));
+#else
+		std::string filenames[] = {
+			std::string("earth.jpg"),
+			std::string("2zentai_midori.png"),
+			std::string("3tikyu1.png"),
+			std::string("4zentai.png"),
+			std::string("5zentai50.png"),
+		};
+		GLtexture::Generate(&textures, filenames);
+#endif
 	}
 
 	textures[pos].Read();
@@ -93,10 +107,10 @@ void MyApplication::KeyEvent(int key, int scan, int action, int mods)
 			y -= static_cast<double>(1) / 128;
 			break;
 		case GLFW_KEY_LEFT:
-			gaze.x = fmod(gaze.x - 0.5, 360);
+			gaze.x = std::fmod(gaze.x - 0.5, 360);
 			break;
 		case GLFW_KEY_RIGHT:
-			gaze.x = fmod(gaze.x + 0.5, 360);
+			gaze.x = std::fmod(gaze.x + 0.5, 360);
 			break;
 		case GLFW_KEY_O:
 			torus.offset += static_cast<double>(1) / 128;
@@ -118,7 +132,7 @@ void MyApplication::MouseEvent(int button, int action, int mods)
 		}
 		switch (button) {
 		case GLFW_MOUSE_BUTTON_1:
-			gaze.x = fmod(gaze.x + (cursor.x - 0.5) * aspect * 60, 360);
+			gaze.x = std::fmod(gaze.x + (cursor.x - 0.5) * aspect * 60, 360);
 			gaze.y = cage::clip(-45.0, gaze.y + (cursor.y - 0.5) * 60, 45.0);
 			break;
 		}
@@ -167,10 +181,17 @@ void MyApplication::Render()
 	glBegin(GL_LINES);
 	for (auto i = -10; i <= 10; i++) {
 		for (auto j = 0; j < 2; j++) {
+#if defined(_MSC_VER)
 			glVertex3i(-10, i, j * 2 - 1);
 			glVertex3i(+10, i, j * 2 - 1);
 			glVertex3i(i, -10, j * 2 - 1);
 			glVertex3i(i, +10, j * 2 - 1);
+#else
+			glVertex3i(-10, j * 2 - 1, i);
+			glVertex3i(+10, j * 2 - 1, i);
+			glVertex3i(i, j * 2 - 1, -10);
+			glVertex3i(i, j * 2 - 1, +10);
+#endif
 		}
 	}
 	glEnd();

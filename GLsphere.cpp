@@ -10,7 +10,7 @@ GLsphere::GLsphere(GLdouble radius, GLint slices, GLint stacks)
 
 void GLsphere::Draw(GLdouble rotation)
 {
-	glRotated(rotation, 0, cos(Obliquity * M_PI / 180), sin(Obliquity * M_PI / 180)); // 地軸に対する回転
+	glRotated(rotation, 0, std::cos(Obliquity * std::numbers::pi / 180), std::sin(Obliquity * std::numbers::pi / 180)); // 地軸に対する回転
 	glRotated(Obliquity - 90, 1, 0, 0); // 地軸の傾きを再現する
 	Sphere(radius, slices, stacks);
 }

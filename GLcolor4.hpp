@@ -37,8 +37,13 @@ struct GLcolor4
 	}
 };
 
+#if defined(_MSC_VER)
 typedef typename GLcolor4<GLdouble> GLcolor4d;
 typedef typename GLcolor4<GLfloat> GLcolor4f;
+#else
+typedef typename ::GLcolor4<GLdouble> GLcolor4d;
+typedef typename ::GLcolor4<GLfloat> GLcolor4f;
+#endif
 
 namespace GLcolor {
 	// 白

@@ -17,9 +17,9 @@ struct GLcamera : public GLpoint3d
 	template<typename T, typename P>
 	inline T Gaze(const P &predicate) const
 	{
-		const auto azimuth = gaze.x * M_PI / 180;
-		const auto elevation = gaze.y * M_PI / 180;
-		return predicate(cos(azimuth), sin(azimuth), cos(elevation), sin(elevation));
+		const auto azimuth = gaze.x * std::numbers::pi / 180;
+		const auto elevation = gaze.y * std::numbers::pi / 180;
+		return predicate(std::cos(azimuth), std::sin(azimuth), std::cos(elevation), std::sin(elevation));
 	}
 
 	// 視線ベクトル

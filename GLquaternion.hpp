@@ -81,7 +81,11 @@ struct GLquaternion {
 template<typename T, template<typename> typename C, typename U>
 static auto make_quaternion(const C<U> &v, double theta)
 {
+#if defined(_MSC_VER)
 	_ASSERT(v.dot(v) == 1);
+#else
+	assert(v.dot(v) == 1);
+#endif
 	const auto a = theta / 2;
 	const auto c = std::cos(a);
 	const auto s = std::sin(a);

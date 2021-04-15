@@ -85,14 +85,20 @@ struct GLline2 : public GLline<GLpoint2, T>
 
 	// コンストラクタ
 	GLline2(const GLpoint<T, 2> &a, const GLpoint<T, 2> &b)
-		: GLline(a, b), azimuth(atan2(v.y, v.x))
+		: GLline(a, b), azimuth(std::atan2(v.y, v.x))
 	{
 	}
 };
 
+#if defined(_MSC_VER)
 typedef typename GLline2<double> GLline2d;
 typedef typename GLline2<float> GLline2f;
 typedef typename GLline2<int> GLline2i;
+#else
+typedef typename ::GLline2<double> GLline2d;
+typedef typename ::GLline2<float> GLline2f;
+typedef typename ::GLline2<int> GLline2i;
+#endif
 
 template<typename T>
 struct GLline3 : public GLline<GLpoint3, T>
@@ -105,11 +111,17 @@ struct GLline3 : public GLline<GLpoint3, T>
 
 	// コンストラクタ
 	GLline3(const GLpoint<T, 3> &a, const GLpoint<T, 3> &b)
-		: GLline(a, b), azimuth(atan2(v.y, v.x)), elevation(atan2(v.z, sqrt(v.x * v.x + v.y * v.y)))
+		: GLline(a, b), azimuth(std::atan2(v.y, v.x)), elevation(std::atan2(v.z, std::sqrt(v.x * v.x + v.y * v.y)))
 	{
 	}
 };
 
+#if defined(_MSC_VER)
 typedef typename GLline3<double> GLline3d;
 typedef typename GLline3<float> GLline3f;
 typedef typename GLline3<int> GLline3i;
+#else
+typedef typename ::GLline3<double> GLline3d;
+typedef typename ::GLline3<float> GLline3f;
+typedef typename ::GLline3<int> GLline3i;
+#endif

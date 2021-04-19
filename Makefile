@@ -17,7 +17,7 @@ ENV += LD=$(LD) LDFLAGS="$(LDFLAGS)"
 endif
 LD = clang++
 LDFLAGS += -Wl,-s
-LDFLAGS += -lGL -lGLU -lglfw -lpthread
+LDFLAGS += -lGL -lGLU -lglfw -pthread
 LDFLAGS += -rtlib=compiler-rt
 LDFLAGS += -stdlib=libc++
 LDFLAGS += -unwindlib=libunwind

@@ -13,7 +13,8 @@ addons:
       - libopengl-dev
       - libunwind-dev
       - libunwind8
-      - libxrandr
+      - libxrandr-dev
+      - libxrandr2
       - lld
 script:
   - make

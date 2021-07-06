@@ -12,6 +12,7 @@ addons:
       - libglu1-mesa-dev
       - libopengl-dev
       - libunwind-dev
+      - libunwind8
       - libxrandr
       - lld
 script:

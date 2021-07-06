@@ -7,7 +7,7 @@ addons:
       - clang-tools
       - cmake
       - libc++-dev
-      - libc++abi1-dev
+      - libc++abi1
       - libunwind-dev
       - lld
 script:

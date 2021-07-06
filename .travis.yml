@@ -1,0 +1,15 @@
+language: c
+dist: focal
+addons:
+  apt:
+    packages:
+      - clang
+      - clang-tools
+      - cmake
+      - libc++-dev
+      - libc++abi1-dev
+      - libunwind-dev
+      - lld
+script:
+  - make
+  - env TOOL=cmake make

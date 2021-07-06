@@ -15,6 +15,8 @@ addons:
       - libunwind8
       - libxcursor-dev
       - libxcursor1
+      - libxi-dev
+      - libxi6
       - libxinerama-dev
       - libxinerama1
       - libxrandr-dev

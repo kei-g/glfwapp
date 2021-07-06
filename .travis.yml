@@ -9,6 +9,7 @@ addons:
       - libc++-dev
       - libc++abi1
       - libglfw3-dev
+      - libglu1-mesa-dev
       - libopengl-dev
       - libunwind-dev
       - lld

@@ -13,6 +13,8 @@ addons:
       - libopengl-dev
       - libunwind-dev
       - libunwind8
+      - libxinerama-dev
+      - libxinerama1
       - libxrandr-dev
       - libxrandr2
       - lld

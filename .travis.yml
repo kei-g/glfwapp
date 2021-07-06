@@ -8,6 +8,7 @@ addons:
       - cmake
       - libc++-dev
       - libc++abi1
+      - libglfw3-dev
       - libunwind-dev
       - lld
 script:

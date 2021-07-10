@@ -1,9 +1,7 @@
 addons:
   apt:
     packages:
-      - clang
       - clang-tools
-      - cmake
       - libc++-dev
       - libc++abi1
       - libglfw3-dev

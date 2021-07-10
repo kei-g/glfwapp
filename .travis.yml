@@ -32,5 +32,5 @@ notifications:
 os:
   - linux
 script:
-  - apt update && apt -y upgrade && env TOOL=$TOOL make
+  - sudo apt update && sudo apt -y upgrade && env TOOL=$TOOL make
 sudo: true

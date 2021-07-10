@@ -20,6 +20,7 @@ addons:
       - libxrandr-dev
       - libxrandr2
       - lld
+    update: true
 before_install:
   - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
 dist: focal

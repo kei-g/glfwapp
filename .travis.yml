@@ -1,5 +1,3 @@
-language: c
-dist: focal
 addons:
   apt:
     packages:
@@ -22,6 +20,15 @@ addons:
       - libxrandr-dev
       - libxrandr2
       - lld
+dist: focal
+env:
+  matrix:
+    - TOOL=cmake
+    - TOOL=make
+language: c
+notifications:
+  email: false
+os:
+  - linux
 script:
-  - make
-  - env TOOL=cmake make
+  - env TOOL=$TOOL make

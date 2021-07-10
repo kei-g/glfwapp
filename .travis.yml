@@ -20,7 +20,7 @@ addons:
       - lld
     update: true
 before_install:
-  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - && sudo apt update && sudo apt -y upgrade
 dist: focal
 env:
   matrix:
@@ -32,5 +32,4 @@ notifications:
 os:
   - linux
 script:
-  - sudo apt update && sudo apt -y upgrade && env TOOL=$TOOL make
-sudo: true
+  - env TOOL=$TOOL make

@@ -1,9 +1,13 @@
 addons:
   apt:
+    sources:
+      - sourceline: 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-12 main'
+        key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
+      - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
-      - clang-tools
-      - libc++-dev
-      - libc++abi1
+      - clang-12
+      - libc++-12-dev
+      - libc++abi1-12
       - libglfw3-dev
       - libglu1-mesa-dev
       - libopengl-dev
@@ -17,16 +21,19 @@ addons:
       - libxinerama1
       - libxrandr-dev
       - libxrandr2
-      - lld
+      - lld-12
+      - llvm-12-dev
+      - llvm-12-linker-tools
+      - llvm-12-runtime
+      - llvm-12-tools
+      - ninja-build
     update: true
-before_install:
-  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add - && sudo apt update && sudo apt -y upgrade
 dist: focal
 env:
   matrix:
     - TOOL=cmake
     - TOOL=make
-language: c
+language: cpp
 notifications:
   email: false
 os:

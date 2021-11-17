@@ -4,6 +4,7 @@
 * text=auto
 *.cpp linguist-language=c++
 *.h linguist-language=c++
+stb_image.h linguist-vendored=false
 
 ###############################################################################
 # Set default behavior for command prompt diff.

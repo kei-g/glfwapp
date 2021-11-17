@@ -54,10 +54,6 @@ readelf: $(TARGET_BINARY)
 .PHONY: all clean disasm readelf
 
 ifeq ($(TOOL),cmake)
-glfw:
-	@[ ! -d $@ ] && $(RM) $@
-	git clone https://github.com/glfw/glfw.git
-
 $(TARGET_BINARY): $(TARGET_PCH)
 	@[ -d $(BUILD_DIR) ] || mkdir $(BUILD_DIR)
 	@cd $(BUILD_DIR) && $(ENV) cmake .. && cmake --build . -j13

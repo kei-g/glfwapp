@@ -1,17 +1,13 @@
 addons:
   apt:
-    sources:
-      - sourceline: 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-13 main'
-        key_url: 'https://apt.llvm.org/llvm-snapshot.gpg.key'
-      - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
-      - clang-13
-      - libc++-13-dev
-      - libc++abi-13-dev
+      - clang
+      - libc++-dev
+      - libc++abi-dev
       - libglfw3-dev
       - libglu1-mesa-dev
       - libopengl-dev
-      - libunwind-13-dev
+      - libunwind-dev
       - libunwind8
       - libxcursor-dev
       - libxcursor1
@@ -21,12 +17,10 @@ addons:
       - libxinerama1
       - libxrandr-dev
       - libxrandr2
-      - lld-13
-      - lldb-13
-      - llvm-13-dev
-      - llvm-13-linker-tools
-      - llvm-13-runtime
-      - llvm-13-tools
+      - lld
+      - lldb
+      - llvm-dev
+      - llvm-runtime
       - ninja-build
     update: true
 dist: focal

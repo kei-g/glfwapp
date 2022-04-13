@@ -20,12 +20,12 @@ jobs:
           sudo apt-get update
           sudo apt-get upgrade -yqq
           sudo apt-get install -yqq \
-            libc++-13-dev \
-            libc++abi-13-dev \
+            libc++-14-dev \
+            libc++abi-14-dev \
             libglfw3-dev \
             libglu1-mesa-dev \
             libopengl-dev \
-            libunwind-13-dev \
+            libunwind-14-dev \
             libxcursor-dev \
             libxcursor1 \
             libxi-dev \
@@ -37,7 +37,7 @@ jobs:
       - name: Build
         run: |
           env \
-            PATH="/usr/lib/llvm-13/bin:$PATH" \
+            PATH="/usr/lib/llvm-14/bin:$PATH" \
             TOOL=make \
             make -j13
 name: Build
